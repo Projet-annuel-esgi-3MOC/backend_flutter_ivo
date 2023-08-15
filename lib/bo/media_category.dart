@@ -1,6 +1,6 @@
 class MediaCategory {
-  final String title;
-  final String subtitle;
+  String title;
+  String subtitle;
 
   MediaCategory(this.title, this.subtitle);
 

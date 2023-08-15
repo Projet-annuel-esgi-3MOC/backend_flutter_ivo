@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:backend_flutter_ivo/dal/http.dart';
+import 'package:backend_flutter_ivo/screens/media_category_crud/edit.dart';
 import 'package:flutter/material.dart';
 
-class MediaTypeCrud extends StatefulWidget {
-  const MediaTypeCrud({super.key});
+class MediaCategoryCrud extends StatefulWidget {
+  const MediaCategoryCrud({super.key});
 
   @override
-  State<MediaTypeCrud> createState() => _MediaTypeCrudState();
+  State<MediaCategoryCrud> createState() => _MediaCategoryCrudState();
 }
 
-class _MediaTypeCrudState extends State<MediaTypeCrud> {
+class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
   @override
   void initState() {
     fetchData();
@@ -21,6 +22,26 @@ class _MediaTypeCrudState extends State<MediaTypeCrud> {
   Future<List<dynamic>> fetchData() async {
     var res = await fetch('localhost:3000', 'media-category');
     return json.decode(res);
+  }
+
+  void _showModal(BuildContext context, MediaCategory category) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Edit'),
+          content: MediaCategoryEdit(category: category),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the modal
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -45,6 +66,7 @@ class _MediaTypeCrudState extends State<MediaTypeCrud> {
                     return ListTile(
                       title: Text(item.title),
                       subtitle: Text(item.subtitle),
+                      onTap: () => _showModal(context, item),
                     );
                   },
                 );

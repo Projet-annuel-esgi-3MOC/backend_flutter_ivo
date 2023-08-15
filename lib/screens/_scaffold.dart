@@ -1,5 +1,5 @@
 import 'package:backend_flutter_ivo/screens/button_pusher.dart';
-import 'package:backend_flutter_ivo/screens/media_type_crud/index.dart';
+import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: [
         const ButtonPusher(title: 'my title'),
-        const MediaTypeCrud(),
+        const MediaCategoryCrud(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: const [
@@ -42,7 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: currentPageIndex,
         animationDuration: const Duration(milliseconds: 200),
         onDestinationSelected: (index) async {
-
           setState(() {
             currentPageIndex = index;
           });
