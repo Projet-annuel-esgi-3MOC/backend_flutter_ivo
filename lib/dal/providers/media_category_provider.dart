@@ -28,6 +28,6 @@ class MediaCategoryProvider extends ChangeNotifier {
   void updateItems(List<MediaCategory> items) {
     _items = items;
 
-    notifyListeners();
+    //notifyListeners();  // ! this triggers setstate on build
   }
 }

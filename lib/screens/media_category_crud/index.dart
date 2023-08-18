@@ -42,38 +42,9 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
-    final itemsProvider = context.watch<MediaCategoryProvider>();
-
     return Stack(
       children: [
-        Positioned.fill(
-          child: FutureBuilder<List<MediaCategory>>(
-            future: mediaCategoryAccess.getAll(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Snap Error: ${snapshot.error}'));
-              } else {
-                //final itemProvider = context.read<MediaCategoryProvider>();
-                itemsProvider.updateItems(snapshot.data!);
-                List<MediaCategory> itemList = snapshot.data!;
-
-                return ListView.builder(
-                  itemCount: itemList.length,
-                  itemBuilder: (context, index) {
-                    MediaCategory item = itemList[index];
-                    return ListTile(
-                      title: Text(item.title),
-                      subtitle: Text(item.subtitle),
-                      onTap: () => _showModal(context, item),
-                    );
-                  },
-                );
-              }
-            },
-          ),
-        ),
+        Positioned.fill(child: _buildItemList(context)),
         Positioned(
           bottom: 16,
           right: 16,
@@ -83,6 +54,37 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildItemList(BuildContext context) {
+    final itemsProvider = context.watch<MediaCategoryProvider>();
+
+    return FutureBuilder<List<MediaCategory>>(
+      future: mediaCategoryAccess.getAll(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Snap Error: ${snapshot.error}'));
+        } else {
+          //final itemProvider = context.read<MediaCategoryProvider>();
+          itemsProvider.updateItems(snapshot.data!);
+          List<MediaCategory> itemList = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: itemList.length,
+            itemBuilder: (context, index) {
+              MediaCategory item = itemList[index];
+              return ListTile(
+                title: Text(item.title),
+                subtitle: Text(item.subtitle),
+                onTap: () => _showModal(context, item),
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
