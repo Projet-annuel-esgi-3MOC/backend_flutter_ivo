@@ -15,7 +15,7 @@ class MediaCategoryAccess extends DAO<MediaCategory> {
 
   @override
   Future<bool> delete(MediaCategory o) async {
-    await fetch('localhost:3000', 'media-category',
+    await fetch('localhost:3000', 'media-category/${o.id}',
         method: HttpMethods.delete, body: o.toJson());
     return true;
   }

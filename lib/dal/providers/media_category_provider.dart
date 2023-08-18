@@ -33,6 +33,14 @@ class MediaCategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteItem(MediaCategory addedItem) async {
+    await mediaCategoryAccess.delete(addedItem);
+
+    _items = await mediaCategoryAccess.getAll();
+
+    notifyListeners();
+  }
+
   void updateItems(List<MediaCategory> items) {
     _items = items;
 

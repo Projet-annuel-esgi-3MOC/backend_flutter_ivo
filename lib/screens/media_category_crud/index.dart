@@ -68,6 +68,19 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
     );
   }
 
+  _editItem(MediaCategory item) {
+    _showModal(
+      context,
+      item,
+      () async =>
+          {await context.read<MediaCategoryProvider>().updateItem(item)},
+    );
+  }
+
+  _deleteItem(MediaCategory item) async {
+    await context.read<MediaCategoryProvider>().deleteItem(item);
+  }
+
   Widget _buildItemList(BuildContext context) {
     final itemsProvider = context.watch<MediaCategoryProvider>();
 
@@ -90,12 +103,25 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
               return ListTile(
                 title: Text(item.title),
                 subtitle: Text(item.subtitle),
-                onTap: () => _showModal(
-                  context,
-                  item,
-                  () async => {
-                    await context.read<MediaCategoryProvider>().updateItem(item)
-                  },
+                onTap: () => _editItem(item),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        // Perform edit action for the current item
+                        _editItem(item);
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () async {
+                        // Perform delete action for the current item
+                        await _deleteItem(item);
+                      },
+                    ),
+                  ],
                 ),
               );
             },
