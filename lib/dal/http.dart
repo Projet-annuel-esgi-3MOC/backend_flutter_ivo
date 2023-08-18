@@ -43,5 +43,7 @@ Future<String> fetch(String domain, String path,
     client.close();
   }
 
+  debugPrint('HTTP res: $res');
+
   return res;
 }

@@ -13,7 +13,7 @@ class MediaCategory {
 
   factory MediaCategory.fromMap(Map<String, dynamic> json) {
     return MediaCategory(
-        json['_id'] ?? '', json['name'] ?? '', json['subtitle'] ?? '');
+        json['_id'] ?? '', json['title'] ?? '', json['subtitle'] ?? '');
   }
 
   String toJson() {

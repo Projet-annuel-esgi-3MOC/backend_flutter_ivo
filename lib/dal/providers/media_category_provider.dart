@@ -16,7 +16,6 @@ class MediaCategoryProvider extends ChangeNotifier {
   }
 
   Future<void> updateItem(MediaCategory updatedItem) async {
-    debugPrint('Update item $updatedItem');
     // Update the item in your data source
     await mediaCategoryAccess.update(updatedItem);
 

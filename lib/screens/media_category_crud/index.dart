@@ -42,7 +42,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
-    // final items = context.watch<MediaCategoryProvider>().items;
+    final itemsProvider = context.watch<MediaCategoryProvider>();
 
     return Stack(
       children: [
@@ -55,14 +55,14 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Snap Error: ${snapshot.error}'));
               } else {
-                final itemProvider = context.read<MediaCategoryProvider>();
-                //itemProvider.updateItems(snapshot.data!);
+                //final itemProvider = context.read<MediaCategoryProvider>();
+                itemsProvider.updateItems(snapshot.data!);
+                List<MediaCategory> itemList = snapshot.data!;
 
-                //List<MediaCategory> itemList = itemProvider.items;
                 return ListView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: itemList.length,
                   itemBuilder: (context, index) {
-                    MediaCategory item = snapshot.data![index];
+                    MediaCategory item = itemList[index];
                     return ListTile(
                       title: Text(item.title),
                       subtitle: Text(item.subtitle),

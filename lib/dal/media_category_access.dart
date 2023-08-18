@@ -4,7 +4,6 @@ import 'package:backend_flutter_ivo/bo/_enum_http_methods.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/http.dart';
-import 'package:flutter/material.dart';
 
 class MediaCategoryAccess extends DAO<MediaCategory> {
   @override
@@ -46,8 +45,6 @@ class MediaCategoryAccess extends DAO<MediaCategory> {
 
   @override
   Future<bool> update(MediaCategory o) async {
-    debugPrint('upd $o, ${o.toJson()}');
-
     await fetch(
       'localhost:3000',
       'media-category/${o.id}',
