@@ -26,7 +26,12 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Edit'),
-          content: MediaCategoryEdit(category: category),
+          content: MediaCategoryEdit(
+            category: category,
+            onSubmitCallback: () async => {
+              await context.read<MediaCategoryProvider>().updateItem(category)
+            },
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),

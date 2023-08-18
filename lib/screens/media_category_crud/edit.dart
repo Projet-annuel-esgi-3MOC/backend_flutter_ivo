@@ -7,8 +7,11 @@ import 'package:provider/provider.dart';
 class MediaCategoryEdit extends StatefulWidget {
   final String routeName = '/media-category/edit/';
   final MediaCategory category;
+  final Function onSubmitCallback;
 
-  const MediaCategoryEdit({required this.category, Key? key}) : super(key: key);
+  const MediaCategoryEdit(
+      {required this.category, required this.onSubmitCallback, Key? key})
+      : super(key: key);
 
   @override
   State<MediaCategoryEdit> createState() => _MediaCategoryEditState();
@@ -29,16 +32,16 @@ class _MediaCategoryEditState extends State<MediaCategoryEdit> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           TextField(
             controller: _nameController,
-            decoration: InputDecoration(labelText: 'Name'),
+            decoration: const InputDecoration(labelText: 'Title'),
           ),
           TextField(
             controller: _descriptionController,
-            decoration: InputDecoration(labelText: 'Description'),
+            decoration: const InputDecoration(labelText: 'Subtitle'),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
@@ -47,10 +50,8 @@ class _MediaCategoryEditState extends State<MediaCategoryEdit> {
               widget.category.title = _nameController.text;
               widget.category.subtitle = _descriptionController.text;
 
+              await widget.onSubmitCallback();
               // Call your update method here
-              await context
-                  .read<MediaCategoryProvider>()
-                  .updateItem(widget.category);
 
               Navigator.pop(context);
             },

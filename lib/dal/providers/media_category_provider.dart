@@ -25,6 +25,14 @@ class MediaCategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addItem(MediaCategory addedItem) async {
+    await mediaCategoryAccess.create(addedItem);
+
+    _items = await mediaCategoryAccess.getAll();
+
+    notifyListeners();
+  }
+
   void updateItems(List<MediaCategory> items) {
     _items = items;
 
