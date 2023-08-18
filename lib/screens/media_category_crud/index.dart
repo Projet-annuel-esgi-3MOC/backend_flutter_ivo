@@ -20,7 +20,8 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
     super.initState();
   }
 
-  void _showModal(BuildContext context, MediaCategory category) {
+  void _showModal(
+      BuildContext context, MediaCategory category, Function onSubmitCallback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -28,9 +29,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
           title: const Text('Edit'),
           content: MediaCategoryEdit(
             category: category,
-            onSubmitCallback: () async => {
-              await context.read<MediaCategoryProvider>().updateItem(category)
-            },
+            onSubmitCallback: onSubmitCallback,
           ),
           actions: <Widget>[
             TextButton(
@@ -47,6 +46,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
+    final newItem = MediaCategory('', '', '');
     return Stack(
       children: [
         Positioned.fill(child: _buildItemList(context)),
@@ -54,7 +54,13 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
           bottom: 16,
           right: 16,
           child: FloatingActionButton(
-            onPressed: () => 0,
+            onPressed: () => _showModal(
+              context,
+              newItem,
+              () async => {
+                await context.read<MediaCategoryProvider>().addItem(newItem)
+              },
+            ),
             child: const Icon(Icons.add),
           ),
         ),
@@ -84,7 +90,13 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
               return ListTile(
                 title: Text(item.title),
                 subtitle: Text(item.subtitle),
-                onTap: () => _showModal(context, item),
+                onTap: () => _showModal(
+                  context,
+                  item,
+                  () async => {
+                    await context.read<MediaCategoryProvider>().updateItem(item)
+                  },
+                ),
               );
             },
           );
