@@ -1,9 +1,9 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/media_category.dart';
-import 'package:backend_flutter_ivo/dal/http.dart';
+import 'package:backend_flutter_ivo/dal/media_category_access.dart';
+import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/edit.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MediaCategoryCrud extends StatefulWidget {
   const MediaCategoryCrud({super.key});
@@ -13,15 +13,11 @@ class MediaCategoryCrud extends StatefulWidget {
 }
 
 class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
+  final MediaCategoryAccess mediaCategoryAccess = MediaCategoryAccess();
+
   @override
   void initState() {
-    fetchData();
     super.initState();
-  }
-
-  Future<List<dynamic>> fetchData() async {
-    var res = await fetch('localhost:3000', 'media-category');
-    return json.decode(res);
   }
 
   void _showModal(BuildContext context, MediaCategory category) {
@@ -46,23 +42,27 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
+    // final items = context.watch<MediaCategoryProvider>().items;
+
     return Stack(
       children: [
         Positioned.fill(
-          child: FutureBuilder<List<dynamic>>(
-            future: fetchData(),
+          child: FutureBuilder<List<MediaCategory>>(
+            future: mediaCategoryAccess.getAll(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return Center(child: Text('Snap Error: ${snapshot.error}'));
               } else {
-                List<dynamic> itemList = snapshot.data!;
+                final itemProvider = context.read<MediaCategoryProvider>();
+                //itemProvider.updateItems(snapshot.data!);
+
+                //List<MediaCategory> itemList = itemProvider.items;
                 return ListView.builder(
-                  itemCount: itemList.length,
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    MediaCategory item =
-                        MediaCategory.fromJson(itemList[index]);
+                    MediaCategory item = snapshot.data![index];
                     return ListTile(
                       title: Text(item.title),
                       subtitle: Text(item.subtitle),

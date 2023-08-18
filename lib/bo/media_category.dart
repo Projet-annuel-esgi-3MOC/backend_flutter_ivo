@@ -1,10 +1,26 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+
 class MediaCategory {
+  String? _id;
   String title;
   String subtitle;
 
-  MediaCategory(this.title, this.subtitle);
+  MediaCategory(this._id, this.title, this.subtitle);
 
-  factory MediaCategory.fromJson(Map<String, dynamic> json) {
-    return MediaCategory(json['name'] ?? '', json['subtitle'] ?? '');
+  String get id => _id ?? '';
+
+  factory MediaCategory.fromMap(Map<String, dynamic> json) {
+    return MediaCategory(
+        json['_id'] ?? '', json['name'] ?? '', json['subtitle'] ?? '');
+  }
+
+  String toJson() {
+    return jsonEncode({
+      '_id': id,
+      'title': title,
+      'subtitle': subtitle,
+    });
   }
 }
