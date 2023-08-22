@@ -1,9 +1,6 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
-import 'package:backend_flutter_ivo/dal/media_category_access.dart';
 import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
-import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -112,7 +109,7 @@ class _CrudState<T extends BO, U extends Iprovider> extends State<Crud> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         // Perform edit action for the current item
                         _editItem(item);

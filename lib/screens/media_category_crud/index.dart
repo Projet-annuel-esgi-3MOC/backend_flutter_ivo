@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:backend_flutter_ivo/dal/media_category_access.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
@@ -10,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MediaCategoryCrud extends StatefulWidget {
-  late Function(FABAction) fabAction;
+  final Function(FABAction) fabAction;
 
-  MediaCategoryCrud({required this.fabAction, Key? key}) : super(key: key);
+  const MediaCategoryCrud({required this.fabAction, Key? key})
+      : super(key: key);
 
   @override
   State<MediaCategoryCrud> createState() => _MediaCategoryCrudState();

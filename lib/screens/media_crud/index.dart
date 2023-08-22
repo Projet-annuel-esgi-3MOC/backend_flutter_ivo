@@ -1,5 +1,4 @@
 import 'package:backend_flutter_ivo/bo/media.dart';
-import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/generic_dao.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/crud/index.dart';
@@ -18,7 +17,7 @@ class MediaCrud extends StatelessWidget {
         instanceCreator: (p0) => Media(null, publicName: ''),
         collectionName: 'media',
       ),
-      editWidget: MediaEditWidget(),
+      editWidget: const MediaEditWidget(),
     );
   }
 }

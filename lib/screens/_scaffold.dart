@@ -1,8 +1,6 @@
-import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/button_pusher.dart';
 import 'package:backend_flutter_ivo/screens/crud_selecter.dart';
-import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {

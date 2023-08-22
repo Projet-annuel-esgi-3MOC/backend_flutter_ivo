@@ -11,6 +11,7 @@ class Media implements BO {
 
   Media(this._id, {required this.publicName});
 
+  @override
   String get id => _id ?? '';
 
   factory Media.fromMap(Map<String, dynamic> json) {

@@ -1,11 +1,10 @@
-import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_crud/index.dart';
 import 'package:flutter/material.dart';
 
 class CrudSelecter extends StatefulWidget {
-  late Function(FABAction) fabAction;
+  final Function(FABAction) fabAction;
 
   final List<Widget> cruds = [];
 
@@ -71,7 +70,7 @@ class _CrudSelecterState extends State<CrudSelecter> {
               }).toList(),
             ),
           PopupMenuButton<String>(
-            icon: Icon(Icons.arrow_drop_down),
+            icon: const Icon(Icons.arrow_drop_down),
             onSelected: (selectedItem) {
               print('Selected: $selectedItem');
             },
