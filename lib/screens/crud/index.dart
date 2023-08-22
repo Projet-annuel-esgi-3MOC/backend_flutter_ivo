@@ -1,36 +1,42 @@
-import 'package:backend_flutter_ivo/bo/media_category.dart';
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
+import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
+import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/media_category_access.dart';
-import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
-import 'package:backend_flutter_ivo/screens/media_category_crud/edit.dart';
+import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
+import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MediaCategoryCrud extends StatefulWidget {
-  const MediaCategoryCrud({super.key});
+class Crud<T extends BO, U extends Iprovider> extends StatefulWidget {
+  final T Function() newInstanceBuilder;
+  final Widget editWidget;
+  final DAO<T> accessor;
+
+  const Crud({
+    Key? key,
+    required this.newInstanceBuilder,
+    required this.editWidget,
+    required this.accessor,
+  }) : super(key: key);
 
   @override
-  State<MediaCategoryCrud> createState() => _MediaCategoryCrudState();
+  State<Crud> createState() => _CrudState<T, U>();
 }
 
-class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
-  final MediaCategoryAccess mediaCategoryAccess = MediaCategoryAccess();
-
+class _CrudState<T extends BO, U extends Iprovider> extends State<Crud> {
   @override
   void initState() {
     super.initState();
   }
 
-  void _showModal(
-      BuildContext context, MediaCategory category, Function onSubmitCallback) {
+  void _showModal(BuildContext context, BO object,
+      Future<void> Function(BO) onSubmitCallback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Edit'),
-          content: MediaCategoryEdit(
-            category: category,
-            onSubmitCallback: onSubmitCallback,
-          ),
+          content: widget.editWidget,
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),
@@ -46,7 +52,8 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
-    final newItem = MediaCategory('', '');
+    final newItem = widget.newInstanceBuilder();
+
     return Stack(
       children: [
         Positioned.fill(child: _buildItemList(context)),
@@ -57,8 +64,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
             onPressed: () => _showModal(
               context,
               newItem,
-              () async =>
-                  {await context.read<MediaCategoryProvider>().add(newItem)},
+              (BO newItem) async => await context.read<U>().add(newItem),
             ),
             child: const Icon(Icons.add),
           ),
@@ -67,23 +73,23 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
     );
   }
 
-  _editItem(MediaCategory item) {
+  _editItem(BO item) {
     _showModal(
       context,
       item,
-      () async => {await context.read<MediaCategoryProvider>().update(item)},
+      (BO newItem) async => await context.read<U>().update(item),
     );
   }
 
-  _deleteItem(MediaCategory item) async {
-    await context.read<MediaCategoryProvider>().remove(item);
+  _deleteItem(BO item) async {
+    await context.read<U>().remove(item);
   }
 
   Widget _buildItemList(BuildContext context) {
-    final itemsProvider = context.watch<MediaCategoryProvider>();
+    final itemsProvider = context.watch<U>();
 
-    return FutureBuilder<List<MediaCategory>>(
-      future: mediaCategoryAccess.getAll(),
+    return FutureBuilder<List<BO>>(
+      future: widget.accessor.getAll(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -92,12 +98,12 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
         } else {
           //final itemProvider = context.read<MediaCategoryProvider>();
           itemsProvider.updateItems(snapshot.data!);
-          List<MediaCategory> itemList = snapshot.data!;
+          List<BO> itemList = snapshot.data!;
 
           return ListView.builder(
             itemCount: itemList.length,
             itemBuilder: (context, index) {
-              MediaCategory item = itemList[index];
+              BO item = itemList[index];
               return ListTile(
                 title: Text(item.showTitle()),
                 subtitle: Text(item.showSubtitle()),

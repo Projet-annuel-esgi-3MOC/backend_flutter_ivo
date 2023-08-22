@@ -1,26 +1,38 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 
-class MediaCategory {
+class MediaCategory implements BO {
   String? _id;
-  String title;
-  String subtitle;
+  String name;
 
-  MediaCategory(this._id, this.title, this.subtitle);
+  MediaCategory(
+    this._id,
+    this.name,
+  );
 
+  @override
   String get id => _id ?? '';
 
   factory MediaCategory.fromMap(Map<String, dynamic> json) {
-    return MediaCategory(
-        json['_id'] ?? '', json['title'] ?? '', json['subtitle'] ?? '');
+    return MediaCategory(json['_id'] ?? '', json['name'] ?? '');
   }
 
+  @override
   String toJson() {
     return jsonEncode({
       '_id': id,
-      'title': title,
-      'subtitle': subtitle,
+      'name': name,
     });
+  }
+
+  @override
+  String showSubtitle() {
+    return name;
+  }
+
+  @override
+  String showTitle() {
+    return '';
   }
 }
