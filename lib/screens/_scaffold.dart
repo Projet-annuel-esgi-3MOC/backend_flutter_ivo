@@ -1,4 +1,7 @@
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
+import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/button_pusher.dart';
+import 'package:backend_flutter_ivo/screens/crud_selecter.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +17,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int currentPageIndex = 0;
 
+  FABAction? fabAction;
+
+  void changeFabAction(FABAction fun) {
+    fabAction = fun;
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -25,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: [
         const ButtonPusher(title: 'my title'),
-        const MediaCategoryCrud(),
+        CrudSelecter(fabAction: changeFabAction),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: const [
@@ -47,6 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => fabAction!.function(fabAction!.parameters),
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

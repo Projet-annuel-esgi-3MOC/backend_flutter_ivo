@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:backend_flutter_ivo/dal/media_category_access.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
+import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MediaCategoryCrud extends StatefulWidget {
-  const MediaCategoryCrud({super.key});
+  late Function(FABAction) fabAction;
+
+  MediaCategoryCrud({required this.fabAction, Key? key}) : super(key: key);
 
   @override
   State<MediaCategoryCrud> createState() => _MediaCategoryCrudState();
@@ -18,6 +24,19 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
   @override
   void initState() {
     super.initState();
+
+    final newItem = MediaCategory('', '');
+
+    widget.fabAction(FABAction(function: openModal, parameters: [newItem]));
+  }
+
+  void openModal(List<dynamic> newItem) {
+    final MediaCategory newItem_ = newItem.first as MediaCategory;
+    _showModal(
+      context,
+      newItem_,
+      () async => {await context.read<MediaCategoryProvider>().add(newItem_)},
+    );
   }
 
   void _showModal(
@@ -46,25 +65,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
   @override
   Widget build(BuildContext context) {
-    final newItem = MediaCategory('', '');
-    return Stack(
-      children: [
-        Positioned.fill(child: _buildItemList(context)),
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: FloatingActionButton(
-            onPressed: () => _showModal(
-              context,
-              newItem,
-              () async =>
-                  {await context.read<MediaCategoryProvider>().add(newItem)},
-            ),
-            child: const Icon(Icons.add),
-          ),
-        ),
-      ],
-    );
+    return _buildItemList(context);
   }
 
   _editItem(MediaCategory item) {
