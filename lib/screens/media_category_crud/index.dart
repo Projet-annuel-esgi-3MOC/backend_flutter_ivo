@@ -105,7 +105,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       onPressed: () {
                         // Perform edit action for the current item
                         _editItem(item);
