@@ -13,12 +13,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
+  final List<Widget> fabs = [];
+
+  void addFab(Widget fab) {
+    setState(() {
+      fabs.add(fab);
+    });
+  }
 
   FABAction? fabAction;
 
   void changeFabAction(FABAction fun) {
     fabAction = fun;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    addFab(FloatingActionButton(
+      onPressed: () => fabAction!.function(fabAction!.parameters),
+      child: const Icon(Icons.add),
+    ));
   }
 
   @override
@@ -30,10 +47,31 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: [
-        const ButtonPusher(title: 'my title'),
-        CrudSelecter(fabAction: changeFabAction),
-      ][currentPageIndex],
+      body: Stack(
+        children: [
+          Positioned.fill(
+              child: [
+            const ButtonPusher(title: 'my title'),
+            CrudSelecter(
+              fabAction: changeFabAction,
+              fabAdd: addFab,
+            ),
+          ][currentPageIndex]),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: Row(
+              children: [
+                for (var fab in fabs)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: fab,
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         destinations: const [
           NavigationDestination(
@@ -54,11 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => fabAction!.function(fabAction!.parameters),
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

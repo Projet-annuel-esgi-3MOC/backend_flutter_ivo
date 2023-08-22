@@ -1,14 +1,17 @@
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_crud/index.dart';
+import 'package:backend_flutter_ivo/widgets/drop_down_fab.dart';
 import 'package:flutter/material.dart';
 
 class CrudSelecter extends StatefulWidget {
   final Function(FABAction) fabAction;
+  final Function(Widget) fabAdd;
 
   final List<Widget> cruds = [];
 
-  CrudSelecter({required this.fabAction, Key? key}) : super(key: key);
+  CrudSelecter({required this.fabAction, required this.fabAdd, Key? key})
+      : super(key: key);
 
   @override
   State<CrudSelecter> createState() => _CrudSelecterState();
@@ -27,39 +30,35 @@ class _CrudSelecterState extends State<CrudSelecter> {
     ]);
 
     _selectedCrud = widget.cruds.first;
-  }
 
-  void toggleDropdown() {
-    setState(() {
-      isDropDownOpen = !isDropDownOpen;
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   widget.fabAdd(
+    //     const ExpandableFabButton(
+    //       options: ['One', 'Two', 'Three'],
+    //     ),
+    //   );
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _selectedCrud,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Column(
+      body: Stack(
         children: [
-          FloatingActionButton.extended(
-            onPressed: () => setState(() {
-              isDropDownOpen = !isDropDownOpen;
-            }),
-            label: Text(_selectedCrud.runtimeType.toString()),
-            icon: const Icon(Icons.list),
-          ),
-          if (isDropDownOpen)
-            DropdownButton<String>(
+          Positioned.fill(child: _selectedCrud),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            child: DropdownButton<String>(
               value: _selectedCrud.runtimeType.toString(),
               onChanged: (newValue) {
+                print(newValue);
                 setState(() {
                   _selectedCrud = widget.cruds
                       .where((element) =>
-                          element.runtimeType.toString() ==
-                          element.runtimeType.toString())
+                          element.runtimeType.toString() == newValue)
                       .first;
-                  toggleDropdown();
+                  print(_selectedCrud.runtimeType.toString());
                 });
               },
               items: widget.cruds.map((item) {
@@ -69,19 +68,6 @@ class _CrudSelecterState extends State<CrudSelecter> {
                 );
               }).toList(),
             ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.arrow_drop_down),
-            onSelected: (selectedItem) {
-              print('Selected: $selectedItem');
-            },
-            itemBuilder: (BuildContext context) {
-              return widget.cruds.map((Widget item) {
-                return PopupMenuItem<String>(
-                  value: item.runtimeType.toString(),
-                  child: Text(item.runtimeType.toString()),
-                );
-              }).toList();
-            },
           ),
         ],
       ),
