@@ -1,5 +1,4 @@
 import 'package:backend_flutter_ivo/bo/media_category.dart';
-import 'package:backend_flutter_ivo/dal/media_category_access.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/edit.dart';
@@ -7,10 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MediaCategoryCrud extends StatefulWidget {
-  final Function(FABAction) fabAction;
+  final Function(FABAction) setFab;
 
-  const MediaCategoryCrud({required this.fabAction, Key? key})
-      : super(key: key);
+  const MediaCategoryCrud({required this.setFab, Key? key}) : super(key: key);
 
   @override
   State<MediaCategoryCrud> createState() => _MediaCategoryCrudState();
@@ -23,7 +21,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
 
     final newItem = MediaCategory('', '');
 
-    widget.fabAction(FABAction(function: openModal, parameters: [newItem]));
+    widget.setFab(FABAction(function: openModal, parameters: [newItem]));
   }
 
   void openModal(List<dynamic> newItem) {

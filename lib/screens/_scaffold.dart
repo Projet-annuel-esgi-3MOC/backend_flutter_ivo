@@ -1,4 +1,3 @@
-import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/button_pusher.dart';
 import 'package:backend_flutter_ivo/screens/crud_selecter.dart';
 import 'package:flutter/material.dart';
@@ -16,28 +15,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPageIndex = 1;
   final List<Widget> fabs = [];
 
-  void addFab(Widget fab) {
-    setState(() {
-      fabs.add(fab);
-    });
-  }
-
-  FABAction? fabAction;
-
-  void changeFabAction(FABAction fun) {
-    fabAction = fun;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    addFab(FloatingActionButton(
-      onPressed: () => fabAction!.function(fabAction!.parameters),
-      child: const Icon(Icons.add),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Positioned.fill(
               child: [
             const ButtonPusher(title: 'my title'),
-            CrudSelecter(
-              fabAction: changeFabAction,
-              fabAdd: addFab,
-            ),
+            CrudSelecter(),
           ][currentPageIndex]),
           Positioned(
             bottom: 16,

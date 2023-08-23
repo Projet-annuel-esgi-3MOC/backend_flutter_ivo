@@ -1,13 +1,9 @@
-import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
-
 abstract class Iprovider<BO> {
   void fetch() async {
     throw UnimplementedError("implement this");
   }
 
   Future<List<BO>> getAll() async {
-    print('toto');
     throw UnimplementedError("implement this");
   }
 
@@ -23,6 +19,8 @@ abstract class Iprovider<BO> {
     throw UnimplementedError("implement this");
   }
 
+  /// Updates the internal list, after a remote call
+  /// without causing any persistence, internal use
   void updateItems(List<BO> items) {
     throw UnimplementedError("implement this");
   }

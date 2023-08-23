@@ -6,7 +6,7 @@ import 'package:backend_flutter_ivo/screens/media_crud/edit.dart';
 import 'package:flutter/material.dart';
 
 class MediaCrud extends StatelessWidget {
-  final Function(FABAction) fabAction;
+  final FABAction fabAction;
   const MediaCrud({required this.fabAction, Key? key}) : super(key: key);
 
   @override
