@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +11,27 @@ class MediaEditWidget extends StatefulWidget {
 }
 
 class _MediaEditWidgetState extends State<MediaEditWidget> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
 
-  final TextEditingController _nameController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    _nameController = TextEditingController();
+  }
+
   XFile? _image;
 
   Future<void> _submitForm() async {
+    if (_formKey.currentState == null) {
+      print('formKey is null');
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       // Form is valid, process data
-      String textValue = _nameController.text;
+      String? textValue = _nameController.text;
       print('Text Value: $textValue');
       if (_image != null) {
         print('Image Path: ${_image!.path}');
@@ -40,42 +50,45 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return CrudEdit<Media>(
-      fields: [
-        TextFormField(
-          controller: _nameController,
-          decoration: const InputDecoration(
-            labelText: 'Title',
-            border: OutlineInputBorder(),
+    return Form(
+      key: _formKey,
+      child: CrudEdit<Media>(
+        fields: [
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(
+              labelText: 'Title',
+              border: OutlineInputBorder(),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 20),
-        TextFormField(
-          controller: _nameController,
-          decoration: const InputDecoration(
-            labelText: 'Text Field',
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(
+              labelText: 'Text Field',
+            ),
           ),
-        ),
-        const SizedBox(height: 16.0),
-        _image != null
-            ? Image.network(
-                _image!.path,
-                height: 100,
-              )
-            : Container(),
-        ElevatedButton(
-          onPressed: _pickImage,
-          child: const Text('Pick Image'),
-        ),
-        const SizedBox(height: 16.0),
-      ],
-      onSave: _submitForm,
+          const SizedBox(height: 16.0),
+          _image != null
+              ? Image.network(
+                  _image!.path,
+                  height: 100,
+                )
+              : Container(),
+          ElevatedButton(
+            onPressed: _pickImage,
+            child: const Text('Pick Image'),
+          ),
+          const SizedBox(height: 16.0),
+        ],
+        onSave: _submitForm,
+      ),
     );
   }
 }
