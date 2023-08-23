@@ -1,16 +1,19 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
+import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
   final BO Function() newInstanceBuilder;
   final Widget editWidget;
+  final Function(FABAction) setFAB;
 
   const Crud({
     Key? key,
     required this.newInstanceBuilder,
     required this.editWidget,
+    required this.setFAB,
   }) : super(key: key);
 
   @override
@@ -21,10 +24,23 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
   @override
   void initState() {
     super.initState();
+
+    final newItem = widget.newInstanceBuilder();
+
+    widget.setFAB(FABAction(function: openModal, parameters: [newItem]));
   }
 
-  void _showModal(BuildContext context, BO object,
-      Future<void> Function(T) onSubmitCallback) {
+  void openModal(List<dynamic> newItem) {
+    final T newItem_ = newItem.first;
+
+    _showModal(
+      context,
+      newItem_,
+      () async => {await context.read<U>().add(newItem_)},
+    );
+  }
+
+  void _showModal(BuildContext context, T category, Function onSubmitCallback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

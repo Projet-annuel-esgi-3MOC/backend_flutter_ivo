@@ -26,10 +26,12 @@ class _CrudSelecterState extends State<CrudSelecter> {
   void initState() {
     fabAction = FABAction(function: (_) => print('no fab'), parameters: []);
     super.initState();
-    widget.cruds.addAll([
-      MediaCategoryCrud(setFab: changeFabAction),
-      MediaCrud(fabAction: fabAction),
-    ]);
+    widget.cruds.addAll(
+      [
+        MediaCategoryCrud(setFab: changeFabAction),
+        MediaCrud(setFAB: changeFabAction),
+      ],
+    );
 
     _selectedCrud = widget.cruds.first;
   }

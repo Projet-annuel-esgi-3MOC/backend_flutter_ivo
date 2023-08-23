@@ -6,14 +6,15 @@ import 'package:backend_flutter_ivo/screens/media_crud/edit.dart';
 import 'package:flutter/material.dart';
 
 class MediaCrud extends StatelessWidget {
-  final FABAction fabAction;
-  const MediaCrud({required this.fabAction, Key? key}) : super(key: key);
+  final Function(FABAction) setFAB;
+  const MediaCrud({required this.setFAB, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Crud<Media, MediaProvider>(
       newInstanceBuilder: () => Media(null, publicName: ''),
       editWidget: const MediaEditWidget(),
+      setFAB: setFAB,
     );
   }
 }
