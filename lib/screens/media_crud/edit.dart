@@ -64,8 +64,8 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
         ),
         const SizedBox(height: 16.0),
         _image != null
-            ? Image.file(
-                File(_image!.path),
+            ? Image.network(
+                _image!.path,
                 height: 100,
               )
             : Container(),

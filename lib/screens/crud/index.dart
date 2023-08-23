@@ -62,22 +62,6 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
 
   @override
   Widget build(BuildContext context) {
-    //final newItem = widget.newInstanceBuilder();
-
-    // return Stack(
-    //   children: [
-    //     Positioned(
-    //       top: 12,
-    //       right: 12,
-    //       child: SizedBox(
-    //         child: Text('FOOOOOOOO'),
-    //         height: 48,
-    //         width: 48,
-    //       ),
-    //     ),
-    //     Positioned.fill(child: _buildItemList(context)),
-    //   ],
-    // );
     return _buildItemList(context);
   }
 
