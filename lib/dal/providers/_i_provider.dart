@@ -1,23 +1,29 @@
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 
-abstract class Iprovider<T extends Firebaseable> {
+abstract class Iprovider<BO> {
   void fetch() async {
     throw UnimplementedError("implement this");
   }
 
-  Future<void> update(T updatedItem) async {
+  Future<List<BO>> getAll() async {
+    print('toto');
     throw UnimplementedError("implement this");
   }
 
-  Future<void> add(T addedItem) async {
+  Future<void> update(BO updatedItem) async {
     throw UnimplementedError("implement this");
   }
 
-  Future<void> remove(T addedItem) async {
+  Future<void> add(BO addedItem) async {
     throw UnimplementedError("implement this");
   }
 
-  void updateItems(List<T> items) {
+  Future<void> remove(BO addedItem) async {
+    throw UnimplementedError("implement this");
+  }
+
+  void updateItems(List<BO> items) {
     throw UnimplementedError("implement this");
   }
 }

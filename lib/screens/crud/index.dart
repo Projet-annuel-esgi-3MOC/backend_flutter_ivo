@@ -1,33 +1,30 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Crud<T extends BO, U extends Iprovider> extends StatefulWidget {
-  final T Function() newInstanceBuilder;
+class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
+  final BO Function() newInstanceBuilder;
   final Widget editWidget;
-  final DAO<T> accessor;
 
   const Crud({
     Key? key,
     required this.newInstanceBuilder,
     required this.editWidget,
-    required this.accessor,
   }) : super(key: key);
 
   @override
   State<Crud> createState() => _CrudState<T, U>();
 }
 
-class _CrudState<T extends BO, U extends Iprovider> extends State<Crud> {
+class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
   @override
   void initState() {
     super.initState();
   }
 
   void _showModal(BuildContext context, BO object,
-      Future<void> Function(BO) onSubmitCallback) {
+      Future<void> Function(T) onSubmitCallback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -49,44 +46,44 @@ class _CrudState<T extends BO, U extends Iprovider> extends State<Crud> {
 
   @override
   Widget build(BuildContext context) {
-    final newItem = widget.newInstanceBuilder();
+    //final newItem = widget.newInstanceBuilder();
 
-    return Stack(
-      children: [
-        Positioned.fill(child: _buildItemList(context)),
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: FloatingActionButton(
-            onPressed: () => _showModal(
-              context,
-              newItem,
-              (BO newItem) async => await context.read<U>().add(newItem),
-            ),
-            child: const Icon(Icons.add),
-          ),
-        ),
-      ],
-    );
+    // return Stack(
+    //   children: [
+    //     Positioned(
+    //       top: 12,
+    //       right: 12,
+    //       child: SizedBox(
+    //         child: Text('FOOOOOOOO'),
+    //         height: 48,
+    //         width: 48,
+    //       ),
+    //     ),
+    //     Positioned.fill(child: _buildItemList(context)),
+    //   ],
+    // );
+    return _buildItemList(context);
   }
 
-  _editItem(BO item) {
+  _editItem(T item) {
     _showModal(
       context,
       item,
-      (BO newItem) async => await context.read<U>().update(item),
+      (BO newItem) async => await context.read<U?>()?.update(item),
     );
   }
 
-  _deleteItem(BO item) async {
-    await context.read<U>().remove(item);
+  _deleteItem(T item) async {
+    await context.read<U?>()?.remove(item);
   }
 
   Widget _buildItemList(BuildContext context) {
-    final itemsProvider = context.watch<U>();
+    final itemsProvider = context.watch<U?>();
 
-    return FutureBuilder<List<BO>>(
-      future: widget.accessor.getAll(),
+    print('itemsProvider $itemsProvider');
+
+    return FutureBuilder<List<T>>(
+      future: itemsProvider?.getAll(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -94,13 +91,13 @@ class _CrudState<T extends BO, U extends Iprovider> extends State<Crud> {
           return Center(child: Text('Snap Error: ${snapshot.error}'));
         } else {
           //final itemProvider = context.read<MediaCategoryProvider>();
-          itemsProvider.updateItems(snapshot.data!);
-          List<BO> itemList = snapshot.data!;
+          itemsProvider?.updateItems(snapshot.data!);
+          List<T> itemList = snapshot.data!;
 
           return ListView.builder(
             itemCount: itemList.length,
             itemBuilder: (context, index) {
-              BO item = itemList[index];
+              var item = itemList[index];
               return ListTile(
                 title: Text(item.showTitle()),
                 subtitle: Text(item.showSubtitle()),

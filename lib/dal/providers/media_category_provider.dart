@@ -7,15 +7,21 @@ class MediaCategoryProvider extends ChangeNotifier
     implements Iprovider<MediaCategory> {
   final MediaCategoryAccess mediaCategoryAccess = MediaCategoryAccess();
 
-  List<MediaCategory> _items = [];
+  List<MediaCategory>? _items;
 
-  List<MediaCategory> get items => _items;
+  List<MediaCategory> get items => _items ?? [];
 
   // Method to populate items initially
   @override
-  void fetch() async {
+  Future<void> fetch() async {
     _items = await mediaCategoryAccess.getAll();
     notifyListeners();
+  }
+
+  @override
+  Future<List<MediaCategory>> getAll() async {
+    if (_items == null) await fetch();
+    return _items!;
   }
 
   @override

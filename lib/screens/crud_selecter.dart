@@ -1,7 +1,6 @@
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_crud/index.dart';
-import 'package:backend_flutter_ivo/widgets/drop_down_fab.dart';
 import 'package:flutter/material.dart';
 
 class CrudSelecter extends StatefulWidget {
@@ -52,14 +51,13 @@ class _CrudSelecterState extends State<CrudSelecter> {
             child: DropdownButton<String>(
               value: _selectedCrud.runtimeType.toString(),
               onChanged: (newValue) {
-                print(newValue);
                 setState(() {
                   _selectedCrud = widget.cruds
                       .where((element) =>
                           element.runtimeType.toString() == newValue)
                       .first;
-                  print(_selectedCrud.runtimeType.toString());
                 });
+                print('Crud changed $newValue');
               },
               items: widget.cruds.map((item) {
                 return DropdownMenuItem<String>(

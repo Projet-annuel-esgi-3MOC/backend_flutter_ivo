@@ -17,8 +17,6 @@ class MediaCategoryCrud extends StatefulWidget {
 }
 
 class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
-  final MediaCategoryAccess mediaCategoryAccess = MediaCategoryAccess();
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +27,8 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
   }
 
   void openModal(List<dynamic> newItem) {
-    final MediaCategory newItem_ = newItem.first as MediaCategory;
+    final MediaCategory newItem_ = newItem.first;
+
     _showModal(
       context,
       newItem_,
@@ -82,7 +81,7 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
     final itemsProvider = context.watch<MediaCategoryProvider>();
 
     return FutureBuilder<List<MediaCategory>>(
-      future: mediaCategoryAccess.getAll(),
+      future: itemsProvider.getAll(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
