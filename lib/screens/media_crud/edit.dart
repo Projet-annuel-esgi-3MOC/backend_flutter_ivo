@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:html';
+import 'dart:typed_data';
+
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +28,32 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
   XFile? _image;
 
+  Future<String> fetchImageData(String imageUrl) {
+    final Completer<String> completer = Completer<String>();
+
+    final HttpRequest request = HttpRequest();
+    request.open('GET', imageUrl, async: true);
+    request.responseType = 'arraybuffer';
+
+    request.onLoad.listen((event) {
+      if (request.status == 200) {
+        final Uint8List imageData = Uint8List.view(request.response);
+        final String base64Image = base64Encode(imageData);
+        completer.complete(base64Image);
+      } else {
+        completer.completeError('Failed to fetch image: ${request.status}');
+      }
+    });
+
+    request.onError.listen((event) {
+      completer.completeError('Failed to fetch image');
+    });
+
+    request.send();
+
+    return completer.future;
+  }
+
   Future<void> _submitForm() async {
     if (_formKey.currentState == null) {
       print('formKey is null');
@@ -34,8 +65,10 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
       String? textValue = _nameController.text;
       print('Text Value: $textValue');
       if (_image != null) {
-        print('Image Path: ${_image!.path}');
+        print(
+            'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
         // Here you can upload the image to your desired location
+        print(await fetchImageData(_image!.path));
       }
     }
   }
