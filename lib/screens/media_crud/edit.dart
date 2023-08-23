@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
+import 'package:backend_flutter_ivo/screens/crud/_on_save_widget.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,6 +82,8 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
         media.base64payload = pl;
         await Provider.of<MediaProvider>(context, listen: false).add(media);
+
+        Navigator.of(context).pop();
       }
     }
   }

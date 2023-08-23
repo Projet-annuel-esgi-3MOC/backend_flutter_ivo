@@ -35,7 +35,7 @@ class _CrudEditState extends State<CrudEdit> {
               await widget.onSave();
               // Call your update method here
 
-              Navigator.pop(context);
+              //Navigator.pop(context);
             },
             child: const Text('Save Changes'),
           ),

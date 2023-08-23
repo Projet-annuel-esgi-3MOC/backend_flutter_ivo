@@ -1,6 +1,7 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
+import 'package:backend_flutter_ivo/screens/crud/_on_save_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,12 @@ class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
 }
 
 class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
+  Function onCrudSave = () => {throw UnimplementedError('Set a save callback')};
+
+  setOnCrudSaveCallback(Function fun) {
+    onCrudSave = fun;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +57,8 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),
-              onPressed: () {
+              onPressed: () async {
+                //await widget.editWidget.onSave(context);
                 Navigator.of(context).pop(); // Close the modal
               },
             ),
