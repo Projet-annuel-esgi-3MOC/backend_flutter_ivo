@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,7 +40,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return CrudEdit(
+    return CrudEdit<Media>(
       fields: [
         TextFormField(
           controller: _nameController,

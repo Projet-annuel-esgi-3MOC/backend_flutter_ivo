@@ -27,6 +27,7 @@ class _CrudEditState extends State<CrudEdit> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
+          ...widget.fields,
           ElevatedButton(
             onPressed: () async {
               // Update the item with the new values
