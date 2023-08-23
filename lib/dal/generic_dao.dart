@@ -6,7 +6,7 @@ import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/http.dart';
 
 class Access<T extends Firebaseable> extends DAO<T> {
-  final T Function(String) instanceCreator;
+  final T Function(Map<String, dynamic>) instanceCreator;
   String collectionName;
 
   Access({required this.instanceCreator, required this.collectionName});
@@ -14,14 +14,14 @@ class Access<T extends Firebaseable> extends DAO<T> {
   @override
   Future<bool> create(T data) async {
     await fetch('localhost:3000', collectionName,
-        method: HttpMethods.post, body: data.toJson());
+        method: HttpMethods.post, body: data.toCreateJson());
     return true;
   }
 
   @override
   Future<bool> delete(T o) async {
     await fetch('localhost:3000', '$collectionName/${o.id}',
-        method: HttpMethods.delete, body: o.toJson());
+        method: HttpMethods.delete);
     return true;
   }
 
@@ -33,7 +33,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
       method: HttpMethods.get,
     );
 
-    return instanceCreator(res);
+    return instanceCreator(jsonDecode(res));
   }
 
   @override

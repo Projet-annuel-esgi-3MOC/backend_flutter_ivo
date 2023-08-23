@@ -7,4 +7,5 @@ abstract class Firebaseable {
     throw UnimplementedError('Subclasses must implement fromMap method');
   }
   String toJson();
+  String toCreateJson();
 }

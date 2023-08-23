@@ -4,9 +4,11 @@ import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:backend_flutter_ivo/bo/media.dart';
+import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class MediaEditWidget extends StatefulWidget {
   const MediaEditWidget({Key? key}) : super(key: key);
@@ -38,6 +40,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     request.onLoad.listen((event) {
       if (request.status == 200) {
         final Uint8List imageData = Uint8List.view(request.response);
+        print('Raw data ${latin1.decode(imageData)}');
         final String base64Image = base64Encode(imageData);
         completer.complete(base64Image);
       } else {
@@ -54,7 +57,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     return completer.future;
   }
 
-  Future<void> _submitForm() async {
+  Future<void> _submitForm(BuildContext context) async {
     if (_formKey.currentState == null) {
       print('formKey is null');
       return;
@@ -63,12 +66,21 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     if (_formKey.currentState!.validate()) {
       // Form is valid, process data
       String? textValue = _nameController.text;
-      print('Text Value: $textValue');
+      print('Text Value: ${textValue}');
       if (_image != null) {
         print(
             'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
         // Here you can upload the image to your desired location
-        print(await fetchImageData(_image!.path));
+        String pl = await fetchImageData(_image!.path);
+
+        Media media = Media(
+          '',
+          filename: _image!.name,
+          mimeType: _image!.mimeType ?? 'application/octet-stream',
+        );
+
+        media.base64payload = pl;
+        await Provider.of<MediaProvider>(context, listen: false).add(media);
       }
     }
   }
@@ -120,7 +132,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
           ),
           const SizedBox(height: 16.0),
         ],
-        onSave: _submitForm,
+        onSave: () => _submitForm(context),
       ),
     );
   }

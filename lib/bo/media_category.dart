@@ -27,6 +27,13 @@ class MediaCategory implements BO {
   }
 
   @override
+  String toCreateJson() {
+    return jsonEncode({
+      'name': name,
+    });
+  }
+
+  @override
   String showSubtitle() {
     return name;
   }
