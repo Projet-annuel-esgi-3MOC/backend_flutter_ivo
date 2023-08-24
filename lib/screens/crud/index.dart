@@ -58,7 +58,7 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
               child: const Text('Close'),
               onPressed: () async {
                 //await widget.editWidget.onSave(context);
-                Navigator.of(context).pop(); // Close the modal
+                //Navigator.of(context).pop(); // Close the modal
               },
             ),
           ],
