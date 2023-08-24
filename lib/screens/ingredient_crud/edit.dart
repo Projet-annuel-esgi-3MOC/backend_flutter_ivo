@@ -1,6 +1,5 @@
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/bo/ingredient.dart';
-import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
