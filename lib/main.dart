@@ -1,3 +1,4 @@
+import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/screens/_scaffold.dart';
@@ -12,6 +13,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: ((context) => MediaProvider()),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => IngredientProvider()),
       ),
     ], child: const MyApp()),
   );

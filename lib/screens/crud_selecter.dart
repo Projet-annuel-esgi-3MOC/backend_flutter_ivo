@@ -1,4 +1,5 @@
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
+import 'package:backend_flutter_ivo/screens/ingredient_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_crud/index.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _CrudSelecterState extends State<CrudSelecter> {
       [
         MediaCategoryCrud(setFab: changeFabAction),
         MediaCrud(setFAB: changeFabAction),
+        IngredientCrud(setFAB: changeFabAction),
       ],
     );
 
