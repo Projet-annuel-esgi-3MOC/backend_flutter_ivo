@@ -54,10 +54,11 @@ class _RecipeIngredientEditWidgetState
     populateIngredientList(); // Move the async operation here
   }
 
-  void _updateObjectFromForm(Firebaseable ingredient) {
+  void _updateObjectFromForm(Firebaseable recipeIngredient) {
     // Form is valid, process data
     String? textValue = _measureController.text;
-    (ingredient as RecipeIngredient).mesure = textValue;
+    (recipeIngredient as RecipeIngredient).mesure = textValue;
+    recipeIngredient.ingredient = _selectedIngredient;
   }
 
   @override
@@ -65,20 +66,22 @@ class _RecipeIngredientEditWidgetState
     return CrudEdit<RecipeIngredient, RecipeIngredientProvider>(
       object: widget.object,
       fields: [
-        DropdownButton<Ingredient>(
-          value: _selectedIngredient,
-          onChanged: (newValue) {
-            setState(() {
-              _selectedIngredient = newValue!;
-            });
-          },
-          items: _ingredientDropdownOptions.map((item) {
-            return DropdownMenuItem<Ingredient>(
-              value: item,
-              child: Text(item.name),
-            );
-          }).toList(),
-        ),
+        _ingredientDropdownOptions.length == 1
+            ? const Center(child: CircularProgressIndicator())
+            : DropdownButton<Ingredient>(
+                value: _selectedIngredient,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedIngredient = newValue!;
+                  });
+                },
+                items: _ingredientDropdownOptions.map((item) {
+                  return DropdownMenuItem<Ingredient>(
+                    value: item,
+                    child: Text(item.name),
+                  );
+                }).toList(),
+              ),
         TextFormField(
           controller: _measureController,
           decoration: const InputDecoration(
