@@ -27,7 +27,7 @@ class _MediaEditWidgetState extends State<IngredientEditWidget> {
     _nameController = TextEditingController(text: widget.object.name);
   }
 
-  Future<void> _submitForm(BuildContext context) async {
+  Future<void> _submitForm(BuildContext context, Ingredient ingredient) async {
     if (_formKey.currentState == null) {
       showSnackbar(context, 'formKey is null');
       return;
@@ -37,13 +37,14 @@ class _MediaEditWidgetState extends State<IngredientEditWidget> {
       // Form is valid, process data
       String? textValue = _nameController.text;
 
-      Ingredient ingredient = Ingredient(
-        '',
-        name: textValue,
-      );
-
-      await Provider.of<IngredientProvider>(context, listen: false)
-          .add(ingredient);
+      ingredient.name = textValue;
+      if (ingredient.id.isEmpty) {
+        await Provider.of<IngredientProvider>(context, listen: false)
+            .add(ingredient);
+      } else {
+        await Provider.of<IngredientProvider>(context, listen: false)
+            .update(ingredient);
+      }
 
       Navigator.of(context).pop();
     }
@@ -70,7 +71,7 @@ class _MediaEditWidgetState extends State<IngredientEditWidget> {
           ),
           const SizedBox(height: 16.0),
         ],
-        onSave: () => _submitForm(context),
+        onSave: () => _submitForm(context, widget.object),
       ),
     );
   }
