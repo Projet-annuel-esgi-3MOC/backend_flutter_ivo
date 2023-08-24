@@ -1,11 +1,30 @@
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
+import 'package:backend_flutter_ivo/firebase_options.dart';
 import 'package:backend_flutter_ivo/screens/_scaffold.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack);
+    return true;
+  };
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(
