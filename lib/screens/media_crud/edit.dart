@@ -59,33 +59,18 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     return completer.future;
   }
 
-  Future<void> _submitForm(BuildContext context) async {
-    if (_formKey.currentState == null) {
-      print('formKey is null');
-      return;
-    }
+  Future<void> _updateObjectFromForm(Media media) async {
+    // Form is valid, process data
+    String? textValue = _nameController.text;
+    if (_image != null) {
+      print(
+          'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
+      // Here you can upload the image to your desired location
+      String pl = await fetchImageData(_image!.path);
 
-    if (_formKey.currentState!.validate()) {
-      // Form is valid, process data
-      String? textValue = _nameController.text;
-      print('Text Value: ${textValue}');
-      if (_image != null) {
-        print(
-            'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
-        // Here you can upload the image to your desired location
-        String pl = await fetchImageData(_image!.path);
-
-        Media media = Media(
-          '',
-          filename: _image!.name,
-          mimeType: _image!.mimeType ?? 'application/octet-stream',
-        );
-
-        media.base64payload = pl;
-        await Provider.of<MediaProvider>(context, listen: false).add(media);
-
-        Navigator.of(context).pop();
-      }
+      media.filename = _image!.name;
+      media.mimeType = _image!.mimeType ?? 'application/octet-stream';
+      media.base64payload = pl;
     }
   }
 
@@ -101,7 +86,8 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: CrudEdit<Media>(
+      child: CrudEdit<Media, MediaProvider>(
+        object: widget.object,
         fields: [
           TextFormField(
             controller: _nameController,
@@ -136,7 +122,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
           ),
           const SizedBox(height: 16.0),
         ],
-        onSave: () => _submitForm(context),
+        onSave: (Media m) => _updateObjectFromForm(m),
       ),
     );
   }
