@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
   final BO Function() newInstanceBuilder;
-  final Widget editWidget;
+  final Widget Function(T) editWidget;
   final Function(FABAction) setFAB;
 
   const Crud({
@@ -46,13 +46,13 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
     );
   }
 
-  void _showModal(BuildContext context, T category, Function onSubmitCallback) {
+  void _showModal(BuildContext context, T object, Function onSubmitCallback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Edit'),
-          content: widget.editWidget,
+          content: widget.editWidget(object),
           actions: <Widget>[
             TextButton(
               child: const Text('Close'),
@@ -73,10 +73,11 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
   }
 
   _editItem(T item) {
+    print('Edit ${item.toJson()}');
     _showModal(
       context,
       item,
-      (BO newItem) async => await context.read<U?>()?.update(item),
+      (T item) async => await context.read<U?>()?.update(item),
     );
   }
 
@@ -86,8 +87,6 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
 
   Widget _buildItemList(BuildContext context) {
     final itemsProvider = context.watch<U?>();
-
-    print('itemsProvider $itemsProvider');
 
     return FutureBuilder<List<T>>(
       future: itemsProvider?.getAll(),

@@ -1,3 +1,4 @@
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/ingredient.dart';
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
@@ -13,7 +14,9 @@ class IngredientCrud extends StatelessWidget {
   Widget build(BuildContext context) {
     return Crud<Ingredient, IngredientProvider>(
       newInstanceBuilder: () => Ingredient(null, name: ''),
-      editWidget: const IngredientEditWidget(),
+      editWidget: (BO ingredient) => IngredientEditWidget(
+        object: ingredient as Ingredient,
+      ),
       setFAB: setFAB,
     );
   }

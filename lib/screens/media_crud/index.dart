@@ -13,7 +13,9 @@ class MediaCrud extends StatelessWidget {
   Widget build(BuildContext context) {
     return Crud<Media, MediaProvider>(
       newInstanceBuilder: () => Media(null, filename: '', mimeType: ''),
-      editWidget: const MediaEditWidget(),
+      editWidget: (Media media) => MediaEditWidget(
+        object: media,
+      ),
       setFAB: setFAB,
     );
   }

@@ -56,7 +56,6 @@ class _CrudSelecterState extends State<CrudSelecter> {
                           element.runtimeType.toString() == newValue)
                       .first;
                 });
-                print('Crud changed $newValue');
               },
               items: widget.cruds.map((item) {
                 return DropdownMenuItem<String>(

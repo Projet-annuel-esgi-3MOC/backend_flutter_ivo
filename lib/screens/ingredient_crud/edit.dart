@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class IngredientEditWidget extends StatefulWidget {
-  const IngredientEditWidget({Key? key}) : super(key: key);
+  final Ingredient object;
+
+  const IngredientEditWidget({required this.object, Key? key})
+      : super(key: key);
 
   @override
   State<IngredientEditWidget> createState() => _MediaEditWidgetState();
@@ -21,7 +24,7 @@ class _MediaEditWidgetState extends State<IngredientEditWidget> {
   void initState() {
     super.initState();
 
-    _nameController = TextEditingController();
+    _nameController = TextEditingController(text: widget.object.name);
   }
 
   Future<void> _submitForm(BuildContext context) async {

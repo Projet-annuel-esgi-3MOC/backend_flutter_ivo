@@ -11,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class MediaEditWidget extends StatefulWidget {
-  const MediaEditWidget({Key? key}) : super(key: key);
+  final Media object;
+
+  const MediaEditWidget({required this.object, Key? key}) : super(key: key);
 
   @override
   State<MediaEditWidget> createState() => _MediaEditWidgetState();
