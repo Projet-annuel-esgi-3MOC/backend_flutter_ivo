@@ -13,7 +13,7 @@ class IngredientCrud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Crud<Ingredient, IngredientProvider>(
-      newInstanceBuilder: () => Ingredient(null, name: ''),
+      newInstanceBuilder: () => Ingredient.placeholder(),
       editWidget: (BO ingredient) => IngredientEditWidget(
         object: ingredient as Ingredient,
       ),

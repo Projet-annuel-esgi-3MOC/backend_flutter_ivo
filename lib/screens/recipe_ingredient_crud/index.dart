@@ -1,5 +1,4 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/bo/ingredient.dart';
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_ingredient_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
@@ -15,12 +14,7 @@ class RecipeIngredientCrud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Crud<RecipeIngredient, RecipeIngredientProvider>(
-      newInstanceBuilder: () => RecipeIngredient(null,
-          ingredient: Ingredient(
-            '',
-            name: '',
-          ),
-          mesure: ''),
+      newInstanceBuilder: () => RecipeIngredient.placeholder(),
       editWidget: (BO recipeIngredient) => RecipeIngredientEditWidget(
         object: recipeIngredient as RecipeIngredient,
       ),

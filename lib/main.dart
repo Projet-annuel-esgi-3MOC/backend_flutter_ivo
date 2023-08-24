@@ -2,6 +2,7 @@ import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_ingredient_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/recipe_provider.dart';
 import 'package:backend_flutter_ivo/firebase_options.dart';
 import 'package:backend_flutter_ivo/screens/_scaffold.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -13,18 +14,24 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-  };
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    };
 
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack);
-    return true;
-  };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack);
+      return true;
+    };
+  } catch (error) {
+    // une fois sur 10, demarrer crashlitics cause un crash
+    // et un ecran blanc au demarrage
+    debugPrint('Failed to init firebase : $error');
+  }
 
   runApp(
     MultiProvider(providers: [
@@ -39,6 +46,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: ((context) => RecipeIngredientProvider()),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => RecipeProvider()),
       ),
     ], child: const MyApp()),
   );

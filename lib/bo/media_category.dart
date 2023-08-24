@@ -18,6 +18,10 @@ class MediaCategory implements BO {
     return MediaCategory(json['_id'] ?? '', json['name'] ?? '');
   }
 
+  factory MediaCategory.placeholder() {
+    return MediaCategory('', '');
+  }
+
   @override
   String toJson() {
     return jsonEncode({

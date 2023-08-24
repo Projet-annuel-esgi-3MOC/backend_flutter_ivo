@@ -12,7 +12,7 @@ class MediaCrud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Crud<Media, MediaProvider>(
-      newInstanceBuilder: () => Media(null, filename: '', mimeType: ''),
+      newInstanceBuilder: () => Media.placeholder(),
       editWidget: (Media media) => MediaEditWidget(
         object: media,
       ),

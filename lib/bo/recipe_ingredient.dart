@@ -23,6 +23,14 @@ class RecipeIngredient implements BO {
         ingredient: Ingredient.fromMap(jsonDecode(json['ingredient'])));
   }
 
+  factory RecipeIngredient.placeholder() {
+    return RecipeIngredient(
+      '',
+      ingredient: Ingredient.placeholder(),
+      mesure: '',
+    );
+  }
+
   @override
   String toJson() {
     return jsonEncode({

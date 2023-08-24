@@ -1,4 +1,8 @@
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/bo/_i_tileable.dart';
 
-abstract class BO implements Firebaseable, ListTileable {}
+abstract class BO implements Firebaseable, ListTileable {
+  factory BO.placeholder() {
+    throw UnimplementedError('Implement this');
+  }
+}

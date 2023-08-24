@@ -42,4 +42,9 @@ class Ingredient implements BO {
   String showTitle() {
     return '';
   }
+
+  @override
+  factory Ingredient.placeholder() {
+    return Ingredient('', name: '');
+  }
 }

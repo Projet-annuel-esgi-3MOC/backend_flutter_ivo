@@ -9,8 +9,14 @@ class Media implements BO {
   late String base64payload;
   String mimeType;
   Set<MediaCategory> categories = {};
+  String accessUrl;
 
-  Media(this._id, {required this.filename, required this.mimeType});
+  Media(
+    this._id, {
+    required this.filename,
+    required this.mimeType,
+    required this.accessUrl,
+  });
 
   @override
   String get id => _id ?? '';
@@ -20,7 +26,12 @@ class Media implements BO {
       json['_id'] ?? '',
       filename: json['filename'] ?? '',
       mimeType: json['mimeType'] ?? '',
+      accessUrl: json['accessUrl'] ?? '',
     );
+  }
+
+  factory Media.placeholder() {
+    return Media('', filename: '', mimeType: '', accessUrl: '');
   }
 
   @override

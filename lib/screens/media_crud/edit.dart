@@ -60,7 +60,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
   Future<void> _updateObjectFromForm(Media media) async {
     // Form is valid, process data
-    String? textValue = _nameController.text;
+    //String? textValue = _nameController.text;
     if (_image != null) {
       print(
           'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
