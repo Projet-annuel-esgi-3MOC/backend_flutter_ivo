@@ -1,6 +1,7 @@
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/recipe_ingredient_provider.dart';
 import 'package:backend_flutter_ivo/firebase_options.dart';
 import 'package:backend_flutter_ivo/screens/_scaffold.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -35,6 +36,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: ((context) => IngredientProvider()),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => RecipeIngredientProvider()),
       ),
     ], child: const MyApp()),
   );

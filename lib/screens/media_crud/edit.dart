@@ -8,7 +8,6 @@ import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class MediaEditWidget extends StatefulWidget {
   final Media object;
