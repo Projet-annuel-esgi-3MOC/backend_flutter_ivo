@@ -14,7 +14,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  try {
+  // a priori ne fonctionne pas dans la version web
+  // rajoute enormement de bruit dans les stack trace
+  /*try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -31,7 +33,7 @@ void main() async {
     // une fois sur 10, demarrer crashlitics cause un crash
     // et un ecran blanc au demarrage
     debugPrint('Failed to init firebase : $error');
-  }
+  }*/
 
   runApp(
     MultiProvider(providers: [

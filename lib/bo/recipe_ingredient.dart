@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/ingredient.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class RecipeIngredient implements BO {
   String? _id;
@@ -53,5 +54,17 @@ class RecipeIngredient implements BO {
   @override
   String showTitle() {
     return ingredient.name;
+  }
+
+  @override
+  Widget tileSubtitle() {
+    // TODO: implement tileSubtitle
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget tileTitle() {
+    // TODO: implement tileTitle
+    throw UnimplementedError();
   }
 }

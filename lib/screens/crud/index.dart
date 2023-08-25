@@ -107,8 +107,8 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
             itemBuilder: (context, index) {
               var item = itemList[index];
               return ListTile(
-                title: Text(item.showTitle()),
-                subtitle: Text(item.showSubtitle()),
+                title: item.tileTitle(),
+                subtitle: item.tileSubtitle(),
                 onTap: () => _editItem(item),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,

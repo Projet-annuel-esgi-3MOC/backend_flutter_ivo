@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class Ingredient implements BO {
   String? _id;
@@ -46,5 +47,17 @@ class Ingredient implements BO {
   @override
   factory Ingredient.placeholder() {
     return Ingredient('', name: '');
+  }
+
+  @override
+  Widget tileSubtitle() {
+    // TODO: implement tileSubtitle
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget tileTitle() {
+    // TODO: implement tileTitle
+    throw UnimplementedError();
   }
 }

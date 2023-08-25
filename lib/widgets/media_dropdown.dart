@@ -37,6 +37,7 @@ class MediaDropDown extends StatelessWidget {
               setMedia(newValue!);
             },
             items: itemList.map((item) {
+              print(item.accessUrl);
               return DropdownMenuItem<Media>(
                 value: item,
                 child: Row(

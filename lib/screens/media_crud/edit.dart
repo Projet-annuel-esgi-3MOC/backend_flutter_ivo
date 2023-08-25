@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 
+import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
@@ -41,7 +42,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     request.onLoad.listen((event) {
       if (request.status == 200) {
         final Uint8List imageData = Uint8List.view(request.response);
-        print('Raw data ${latin1.decode(imageData)}');
+
         final String base64Image = base64Encode(imageData);
         completer.complete(base64Image);
       } else {
@@ -58,7 +59,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
     return completer.future;
   }
 
-  Future<void> _updateObjectFromForm(Media media) async {
+  Future<void> _updateObjectFromForm(Firebaseable media) async {
     // Form is valid, process data
     //String? textValue = _nameController.text;
     if (_image != null) {
@@ -67,7 +68,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
       // Here you can upload the image to your desired location
       String pl = await fetchImageData(_image!.path);
 
-      media.filename = _image!.name;
+      (media as Media).filename = _image!.name;
       media.mimeType = _image!.mimeType ?? 'application/octet-stream';
       media.base64payload = pl;
     }
@@ -121,7 +122,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
           ),
           const SizedBox(height: 16.0),
         ],
-        onSave: (Media m) => _updateObjectFromForm(m),
+        onSave: (Firebaseable m) => _updateObjectFromForm(m),
       ),
     );
   }

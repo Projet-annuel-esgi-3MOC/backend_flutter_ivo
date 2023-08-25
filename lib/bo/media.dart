@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class Media implements BO {
   String? _id;
   String filename;
-  late String base64payload;
+  String base64payload;
   String mimeType;
   Set<MediaCategory> categories = {};
   String accessUrl;
@@ -16,6 +18,7 @@ class Media implements BO {
     required this.filename,
     required this.mimeType,
     required this.accessUrl,
+    required this.base64payload,
   });
 
   @override
@@ -27,11 +30,18 @@ class Media implements BO {
       filename: json['filename'] ?? '',
       mimeType: json['mimeType'] ?? '',
       accessUrl: json['accessUrl'] ?? '',
+      base64payload: '',
     );
   }
 
   factory Media.placeholder() {
-    return Media('', filename: '', mimeType: '', accessUrl: '');
+    return Media(
+      '',
+      filename: '',
+      mimeType: '',
+      accessUrl: '',
+      base64payload: '',
+    );
   }
 
   @override
@@ -47,9 +57,6 @@ class Media implements BO {
 
   @override
   String toCreateJson() {
-    print(
-      'toCreatejson $filename $mimeType ${base64payload.substring(0, 50)}... $categories',
-    );
     return jsonEncode({
       'filename': filename,
       'mimeType': mimeType,
@@ -66,5 +73,26 @@ class Media implements BO {
   @override
   String showTitle() {
     return filename;
+  }
+
+  @override
+  Widget tileSubtitle() {
+    return Text(showSubtitle());
+  }
+
+  @override
+  Widget tileTitle() {
+    return Row(
+      children: [
+        Image.network(
+          accessUrl,
+          height: 50,
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Text(showTitle())
+      ],
+    );
   }
 }

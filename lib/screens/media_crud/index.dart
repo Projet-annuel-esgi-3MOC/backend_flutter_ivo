@@ -1,3 +1,4 @@
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
@@ -13,8 +14,8 @@ class MediaCrud extends StatelessWidget {
   Widget build(BuildContext context) {
     return Crud<Media, MediaProvider>(
       newInstanceBuilder: () => Media.placeholder(),
-      editWidget: (Media media) => MediaEditWidget(
-        object: media,
+      editWidget: (BO media) => MediaEditWidget(
+        object: media as Media,
       ),
       setFAB: setFAB,
     );
