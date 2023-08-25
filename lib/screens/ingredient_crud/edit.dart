@@ -1,7 +1,9 @@
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/bo/ingredient.dart';
+import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
+import 'package:backend_flutter_ivo/widgets/media_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class IngredientEditWidget extends StatefulWidget {
@@ -16,6 +18,7 @@ class IngredientEditWidget extends StatefulWidget {
 
 class _IngredientEditWidgetState extends State<IngredientEditWidget> {
   late TextEditingController _nameController;
+  late Media _image;
 
   @override
   void initState() {
@@ -24,10 +27,15 @@ class _IngredientEditWidgetState extends State<IngredientEditWidget> {
     _nameController = TextEditingController(text: widget.object.name);
   }
 
+  void setImage(Media media) {
+    _image = media;
+  }
+
   Future<void> _updateObjectFromForm(Firebaseable ingredient) async {
     // Form is valid, process data
     String? textValue = _nameController.text;
     (ingredient as Ingredient).name = textValue;
+    ingredient.image = _image;
   }
 
   @override
@@ -49,6 +57,9 @@ class _IngredientEditWidgetState extends State<IngredientEditWidget> {
           },
         ),
         const SizedBox(height: 16.0),
+        MediaDropDown(
+          setMedia: setImage,
+        ),
       ],
       onSave: (Firebaseable i) => _updateObjectFromForm(i),
     );

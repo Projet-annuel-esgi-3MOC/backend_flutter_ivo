@@ -22,7 +22,7 @@ class Ingredient implements BO {
     return Ingredient(
       json['_id'] ?? '',
       name: json['name'] ?? '',
-      image: json['image'] ?? '',
+      image: Media.fromMap(jsonDecode(json['image'] ?? '{}')),
     );
   }
 

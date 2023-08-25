@@ -23,8 +23,6 @@ class MediaDropDown extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          print(snapshot.stackTrace);
-
           return Center(child: Text('Snap Error: ${snapshot.error}'));
         } else {
           //final itemProvider = context.read<MediaCategoryProvider>();
@@ -36,7 +34,6 @@ class MediaDropDown extends StatelessWidget {
               setMedia(newValue!);
             },
             items: itemList.map((item) {
-              print(item.accessUrl);
               return DropdownMenuItem<Media>(
                 value: item,
                 child: Row(
