@@ -59,6 +59,7 @@ class _IngredientEditWidgetState extends State<IngredientEditWidget> {
         const SizedBox(height: 16.0),
         MediaDropDown(
           setMedia: setImage,
+          getInitialMedia: () => widget.object.image,
         ),
       ],
       onSave: (Firebaseable i) => _updateObjectFromForm(i),

@@ -5,8 +5,13 @@ import 'package:provider/provider.dart';
 
 class MediaDropDown extends StatefulWidget {
   final void Function(Media) setMedia;
+  final Media Function() getInitialMedia;
 
-  const MediaDropDown({required this.setMedia, Key? key}) : super(key: key);
+  const MediaDropDown({
+    required this.setMedia,
+    required this.getInitialMedia,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MediaDropDown> createState() => _MediaDropDownState();
@@ -18,8 +23,6 @@ class _MediaDropDownState extends State<MediaDropDown> {
 
     return await mediaProvider.getAll();
   }
-
-  Media? selectedMedia;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,9 @@ class _MediaDropDownState extends State<MediaDropDown> {
 
           return DropdownMenu<Media>(
             width: 250,
-            initialSelection: selectedMedia,
+            initialSelection: itemList
+                .where((element) => element.id == widget.getInitialMedia().id)
+                .firstOrNull,
             onSelected: (newValue) {
               widget.setMedia(newValue!);
             },
