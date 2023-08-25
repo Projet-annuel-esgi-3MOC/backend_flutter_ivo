@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class CrudEdit<T extends Firebaseable, P extends Iprovider>
     extends StatefulWidget {
   final List<Widget> fields;
-  final void Function(T) onSave;
+  final Future<void> Function(T) onSave;
   final T object;
 
   const CrudEdit({
@@ -32,13 +32,18 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
 
   Future<void> _submitForm(BuildContext context, T object) async {
     if (_formKey.currentState == null) {
+      print('\nNull key');
       showSnackbar(context, 'formKey is null');
       return;
     }
 
     if (_formKey.currentState!.validate()) {
+      print('\nValid form ${object.toJson()}');
+
       // Form is valid, process data
-      widget.onSave(object);
+      await widget.onSave(object);
+
+      print('\nValid form ${object.toJson()}');
 
       if (object.id.isEmpty) {
         await Provider.of<P>(context, listen: false).add(object);
@@ -46,6 +51,8 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
         await Provider.of<P>(context, listen: false).update(object);
       }
     } else {
+      print('\nInvalid form');
+
       showSnackbar(context, 'Invalid form');
     }
 

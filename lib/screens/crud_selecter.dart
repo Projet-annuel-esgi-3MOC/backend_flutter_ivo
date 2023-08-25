@@ -27,7 +27,8 @@ class _CrudSelecterState extends State<CrudSelecter> {
 
   @override
   void initState() {
-    fabAction = FABAction(function: (_) => print('no fab'), parameters: []);
+    fabAction =
+        FABAction(function: (_) => print('no fab'), parameters: () => []);
     super.initState();
     widget.cruds.addAll(
       [
@@ -73,7 +74,7 @@ class _CrudSelecterState extends State<CrudSelecter> {
             bottom: 16,
             right: 16,
             child: FloatingActionButton(
-              onPressed: () => fabAction.function(fabAction.parameters),
+              onPressed: () => fabAction.function(fabAction.parameters()),
               child: const Icon(Icons.add),
             ),
           ),

@@ -57,7 +57,7 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     populateIngredientList(); // Move the async operation here
   }
 
-  void _updateObjectFromForm(Firebaseable recipeIngredient) {
+  Future<void> _updateObjectFromForm(Firebaseable recipeIngredient) async {
     // Form is valid, process data
     (recipeIngredient as Recipe).name = _nameController.text;
     recipeIngredient.difficulty = _difficultyController.text;

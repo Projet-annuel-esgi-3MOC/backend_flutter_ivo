@@ -19,9 +19,14 @@ class _MediaCategoryCrudState extends State<MediaCategoryCrud> {
   void initState() {
     super.initState();
 
-    final newItem = MediaCategory.placeholder();
-
-    widget.setFab(FABAction(function: openModal, parameters: [newItem]));
+    widget.setFab(
+      FABAction(
+        function: openModal,
+        parameters: () => [
+          MediaCategory.placeholder(),
+        ],
+      ),
+    );
   }
 
   void openModal(List<dynamic> newItem) {

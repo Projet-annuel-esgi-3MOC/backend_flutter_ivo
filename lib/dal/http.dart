@@ -16,7 +16,7 @@ Future<String> fetch(String domain, String path,
   final headers = {'Content-Type': 'application/json'};
 
   debugPrint(
-      'HTTP path: $path, method : $method , query : $query, uri: $uri, body: $body');
+      '\nHTTP path: $path, method : $method , query : $query, uri: $uri, body: $body');
 
   try {
     switch (method) {
@@ -43,7 +43,7 @@ Future<String> fetch(String domain, String path,
     client.close();
   }
 
-  debugPrint('HTTP res: $res');
+  debugPrint('\nHTTP res: $res');
 
   return res;
 }

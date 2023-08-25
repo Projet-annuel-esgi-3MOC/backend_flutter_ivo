@@ -54,7 +54,7 @@ class _RecipeIngredientEditWidgetState
     populateIngredientList(); // Move the async operation here
   }
 
-  void _updateObjectFromForm(Firebaseable recipeIngredient) {
+  Future<void> _updateObjectFromForm(Firebaseable recipeIngredient) async {
     // Form is valid, process data
     String? textValue = _measureController.text;
     (recipeIngredient as RecipeIngredient).mesure = textValue;

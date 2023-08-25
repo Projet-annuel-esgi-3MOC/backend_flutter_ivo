@@ -24,7 +24,7 @@ class _IngredientEditWidgetState extends State<IngredientEditWidget> {
     _nameController = TextEditingController(text: widget.object.name);
   }
 
-  void _updateObjectFromForm(Firebaseable ingredient) {
+  Future<void> _updateObjectFromForm(Firebaseable ingredient) async {
     // Form is valid, process data
     String? textValue = _nameController.text;
     (ingredient as Ingredient).name = textValue;

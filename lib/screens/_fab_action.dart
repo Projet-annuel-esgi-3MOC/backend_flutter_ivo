@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FABAction {
   final void Function(List<dynamic>) function;
-  final List<dynamic> parameters;
+  final List<dynamic> Function() parameters;
 
   FABAction({required this.function, required this.parameters});
 }

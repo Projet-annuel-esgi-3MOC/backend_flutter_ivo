@@ -31,9 +31,14 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
   void initState() {
     super.initState();
 
-    final newItem = widget.newInstanceBuilder();
-
-    widget.setFAB(FABAction(function: openModal, parameters: [newItem]));
+    widget.setFAB(
+      FABAction(
+        function: openModal,
+        parameters: () => [
+          widget.newInstanceBuilder(),
+        ],
+      ),
+    );
   }
 
   void openModal(List<dynamic> newItem) {

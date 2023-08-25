@@ -6,9 +6,11 @@ class MediaCategoryEdit extends StatefulWidget {
   final MediaCategory category;
   final Function onSubmitCallback;
 
-  const MediaCategoryEdit(
-      {required this.category, required this.onSubmitCallback, Key? key})
-      : super(key: key);
+  const MediaCategoryEdit({
+    required this.category,
+    required this.onSubmitCallback,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MediaCategoryEdit> createState() => _MediaCategoryEditState();

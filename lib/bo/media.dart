@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Media implements BO {
   String? _id;
@@ -51,7 +50,7 @@ class Media implements BO {
       'filename': filename,
       'mimeType': mimeType,
       'base64payload': base64payload,
-      'mediaCategories': categories,
+      'mediaCategories': categories.toList(),
     });
   }
 

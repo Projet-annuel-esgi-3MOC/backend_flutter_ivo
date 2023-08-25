@@ -20,7 +20,6 @@ class MediaEditWidget extends StatefulWidget {
 }
 
 class _MediaEditWidgetState extends State<MediaEditWidget> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
 
   @override
@@ -62,9 +61,10 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
   Future<void> _updateObjectFromForm(Firebaseable media) async {
     // Form is valid, process data
     //String? textValue = _nameController.text;
+    print('\nUpdate object ${media.toJson()}');
     if (_image != null) {
       print(
-          'Image Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
+          '\nImage Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
       // Here you can upload the image to your desired location
       String pl = await fetchImageData(_image!.path);
 
@@ -72,6 +72,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
       media.mimeType = _image!.mimeType ?? 'application/octet-stream';
       media.base64payload = pl;
     }
+    print('\nUpdate object ${media.toJson()}');
   }
 
   Future<void> _pickImage() async {
@@ -84,46 +85,43 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: CrudEdit<Media, MediaProvider>(
-        object: widget.object,
-        fields: [
-          TextFormField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Title',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+    return CrudEdit<Media, MediaProvider>(
+      object: widget.object,
+      fields: [
+        TextFormField(
+          controller: _nameController,
+          decoration: const InputDecoration(
+            labelText: 'Title',
+            border: OutlineInputBorder(),
           ),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Text Field',
-            ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 20),
+        TextFormField(
+          controller: _nameController,
+          decoration: const InputDecoration(
+            labelText: 'Text Field',
           ),
-          const SizedBox(height: 16.0),
-          _image != null
-              ? Image.network(
-                  _image!.path,
-                  height: 100,
-                )
-              : Container(),
-          ElevatedButton(
-            onPressed: _pickImage,
-            child: const Text('Pick Image'),
-          ),
-          const SizedBox(height: 16.0),
-        ],
-        onSave: (Firebaseable m) => _updateObjectFromForm(m),
-      ),
+        ),
+        const SizedBox(height: 16.0),
+        _image != null
+            ? Image.network(
+                _image!.path,
+                height: 100,
+              )
+            : Container(),
+        ElevatedButton(
+          onPressed: _pickImage,
+          child: const Text('Pick Image'),
+        ),
+        const SizedBox(height: 16.0),
+      ],
+      onSave: (Firebaseable m) => _updateObjectFromForm(m),
     );
   }
 }
