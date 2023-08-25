@@ -46,6 +46,8 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     _selectedRecipeIngredients = [];
     _ingredientDropdownOptions = [];
 
+    _image = widget.object.image;
+
     _nameController = TextEditingController(text: widget.object.name);
     _difficultyController =
         TextEditingController(text: widget.object.difficulty);
@@ -69,7 +71,7 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     _image = media;
   }
 
-  List<MultiSelectItem<Object?>> _msiItems(
+  List<MultiSelectItem<RecipeIngredient>> _msiItems(
       List<RecipeIngredient> ingredientDropdownOptions) {
     return ingredientDropdownOptions
         .map((recipeIngredient) => MultiSelectItem<RecipeIngredient>(
@@ -97,7 +99,7 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
           },
         ),
         const SizedBox(height: 16.0),
-        MultiSelectDialogField(
+        MultiSelectDialogField<RecipeIngredient>(
           items: _msiItems(_ingredientDropdownOptions),
           title: const Text("Ingredients"),
           selectedColor: Colors.blue,
@@ -121,8 +123,9 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
             ),
           ),
           onConfirm: (results) {
-            //_selectedAnimals = results;
+            _selectedRecipeIngredients = results;
           },
+          //onSelectionChanged: (p0) => 0,
         ),
         const SizedBox(height: 16.0),
         MediaDropDown(

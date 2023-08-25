@@ -99,7 +99,7 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          print(snapshot.stackTrace);
+          print('\nSnap error ${snapshot.stackTrace}');
 
           return Center(child: Text('Snap Error: ${snapshot.error}'));
         } else {

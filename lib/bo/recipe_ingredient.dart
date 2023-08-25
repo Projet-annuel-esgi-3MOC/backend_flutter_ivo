@@ -19,6 +19,7 @@ class RecipeIngredient implements BO {
   String get id => _id ?? '';
 
   factory RecipeIngredient.fromMap(Map<String, dynamic> json) {
+    print('hereee $json');
     return RecipeIngredient(json['_id'] ?? '',
         mesure: json['mesure'] ?? '',
         ingredient: Ingredient.fromMap(jsonDecode(json['ingredient'])));

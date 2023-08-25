@@ -24,20 +24,21 @@ class Recipe implements BO {
   String get id => _id ?? '';
 
   factory Recipe.fromMap(Map<String, dynamic> json) {
-    return Recipe(
+    print('\nMap: $json');
+    final recipe = Recipe(
       json['_id'] ?? '',
       name: json['name'] ?? '',
-      recipeIngredients:
-          (jsonDecode(json['recipeIngredients']) as List<Map<String, dynamic>>)
-              .map(
-                (e) => RecipeIngredient.fromMap(e),
-              )
-              .toList(),
+      // recipeIngredients: [],
+      recipeIngredients: (json['recipeIngredients'] as List<dynamic>)
+          .map((e) => RecipeIngredient.fromMap(jsonDecode(e)))
+          .toList(),
       difficulty: json['difficulty'] ?? '',
       image: Media.fromMap(
         jsonDecode(json['image']),
       ),
     );
+
+    return recipe;
   }
 
   factory Recipe.placeholder() {
@@ -56,8 +57,8 @@ class Recipe implements BO {
       '_id': id,
       'name': name,
       'difficulty': difficulty,
-      'recipeIngredients': jsonEncode(recipeIngredients),
-      'image': jsonEncode(image)
+      'recipeIngredients': recipeIngredients,
+      'image': image
     });
   }
 
@@ -66,8 +67,8 @@ class Recipe implements BO {
     return jsonEncode({
       'name': name,
       'difficulty': difficulty,
-      'recipeIngredients': jsonEncode(recipeIngredients),
-      'image': jsonEncode(image)
+      'recipeIngredients': recipeIngredients,
+      'image': image
     });
   }
 
