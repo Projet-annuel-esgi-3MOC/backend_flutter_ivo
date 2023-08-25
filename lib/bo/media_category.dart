@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class MediaCategory implements BO {
   String? _id;
@@ -50,13 +50,11 @@ class MediaCategory implements BO {
 
   @override
   Widget tileSubtitle() {
-    // TODO: implement tileSubtitle
-    throw UnimplementedError();
+    return Text(showSubtitle());
   }
 
   @override
   Widget tileTitle() {
-    // TODO: implement tileTitle
-    throw UnimplementedError();
+    return Text(showTitle());
   }
 }

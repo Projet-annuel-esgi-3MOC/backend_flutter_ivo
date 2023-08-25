@@ -27,8 +27,10 @@ class _CrudSelecterState extends State<CrudSelecter> {
 
   @override
   void initState() {
-    fabAction =
-        FABAction(function: (_) => print('no fab'), parameters: () => []);
+    fabAction = FABAction(
+      function: (_) => 0,
+      parameters: () => [],
+    );
     super.initState();
     widget.cruds.addAll(
       [

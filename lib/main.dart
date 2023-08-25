@@ -1,4 +1,3 @@
-import 'package:backend_flutter_ivo/_crashlitics.dart';
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';

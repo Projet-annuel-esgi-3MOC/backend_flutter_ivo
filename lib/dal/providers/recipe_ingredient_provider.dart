@@ -15,7 +15,7 @@ class RecipeIngredientProvider extends ChangeNotifier
     implements Iprovider<RecipeIngredient> {
   final Access<RecipeIngredient> accesser_ = accesser;
 
-  List<RecipeIngredient>? _items = null;
+  List<RecipeIngredient>? _items;
 
   List<RecipeIngredient> get items => _items ?? [];
 

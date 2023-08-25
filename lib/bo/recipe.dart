@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class Recipe implements BO {
   String? _id;
@@ -83,13 +83,11 @@ class Recipe implements BO {
 
   @override
   Widget tileSubtitle() {
-    // TODO: implement tileSubtitle
-    throw UnimplementedError();
+    return Text(showSubtitle());
   }
 
   @override
   Widget tileTitle() {
-    // TODO: implement tileTitle
-    throw UnimplementedError();
+    return Text(showTitle());
   }
 }

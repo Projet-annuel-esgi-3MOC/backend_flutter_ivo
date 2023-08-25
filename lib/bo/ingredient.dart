@@ -1,22 +1,29 @@
 import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:backend_flutter_ivo/bo/media.dart';
+import 'package:flutter/material.dart';
 
 class Ingredient implements BO {
   String? _id;
   String name;
+  Media image;
 
   Ingredient(
     this._id, {
     required this.name,
+    required this.image,
   });
 
   @override
   String get id => _id ?? '';
 
   factory Ingredient.fromMap(Map<String, dynamic> json) {
-    return Ingredient(json['_id'] ?? '', name: json['name'] ?? '');
+    return Ingredient(
+      json['_id'] ?? '',
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+    );
   }
 
   @override
@@ -24,6 +31,7 @@ class Ingredient implements BO {
     return jsonEncode({
       '_id': id,
       'name': name,
+      'image': image,
     });
   }
 
@@ -31,6 +39,7 @@ class Ingredient implements BO {
   String toCreateJson() {
     return jsonEncode({
       'name': name,
+      'image': image,
     });
   }
 
@@ -46,18 +55,22 @@ class Ingredient implements BO {
 
   @override
   factory Ingredient.placeholder() {
-    return Ingredient('', name: '');
+    return Ingredient('', name: '', image: Media.placeholder());
   }
 
   @override
   Widget tileSubtitle() {
-    // TODO: implement tileSubtitle
-    throw UnimplementedError();
+    return Text(showSubtitle());
   }
 
   @override
   Widget tileTitle() {
-    // TODO: implement tileTitle
-    throw UnimplementedError();
+    return Row(children: [
+      Image.network(image.accessUrl),
+      const SizedBox(
+        height: 16,
+      ),
+      Text(name),
+    ]);
   }
 }

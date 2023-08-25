@@ -34,7 +34,7 @@ class _ExpandableFabButtonState extends State<ExpandableFabButton> {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Icon(Icons.list),
+            const Icon(Icons.list),
             !isExpanded
                 ? Text(selectedOption)
                 : Column(

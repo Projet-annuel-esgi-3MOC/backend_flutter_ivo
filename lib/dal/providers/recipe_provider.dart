@@ -14,7 +14,7 @@ final accesser = Access<Recipe>(
 class RecipeProvider extends ChangeNotifier implements Iprovider<Recipe> {
   final Access<Recipe> accesser_ = accesser;
 
-  List<Recipe>? _items = null;
+  List<Recipe>? _items;
 
   List<Recipe> get items => _items ?? [];
 

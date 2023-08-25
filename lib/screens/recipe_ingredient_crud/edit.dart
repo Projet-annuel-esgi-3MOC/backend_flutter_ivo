@@ -42,7 +42,7 @@ class _RecipeIngredientEditWidgetState
   @override
   void initState() {
     super.initState();
-    _selectedIngredient = Ingredient('', name: '');
+    _selectedIngredient = Ingredient.placeholder();
     _ingredientDropdownOptions = [_selectedIngredient];
 
     _measureController = TextEditingController(text: widget.object.mesure);

@@ -14,7 +14,7 @@ final mediaAccess = Access<Media>(
 class MediaProvider extends ChangeNotifier implements Iprovider<Media> {
   final Access<Media> mediaAccess_ = mediaAccess;
 
-  List<Media>? _items = null;
+  List<Media>? _items;
 
   List<Media> get items => _items ?? [];
 
