@@ -3,20 +3,26 @@ import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MediaDropDown extends StatelessWidget {
+class MediaDropDown extends StatefulWidget {
   final void Function(Media) setMedia;
 
   const MediaDropDown({required this.setMedia, Key? key}) : super(key: key);
 
+  @override
+  State<MediaDropDown> createState() => _MediaDropDownState();
+}
+
+class _MediaDropDownState extends State<MediaDropDown> {
   Future<List<Media>> fetchMedia(BuildContext context) async {
     MediaProvider mediaProvider = context.watch<MediaProvider>();
 
     return await mediaProvider.getAll();
   }
 
+  Media? selectedMedia;
+
   @override
   Widget build(BuildContext context) {
-    Media? selectedMedia;
     return FutureBuilder<List<Media>>(
       future: fetchMedia(context),
       builder: (context, snapshot) {
@@ -28,25 +34,20 @@ class MediaDropDown extends StatelessWidget {
           //final itemProvider = context.read<MediaCategoryProvider>();
           List<Media> itemList = snapshot.data!;
 
-          return DropdownButton<Media>(
-            value: selectedMedia,
-            onChanged: (newValue) {
-              setMedia(newValue!);
+          return DropdownMenu<Media>(
+            width: 250,
+            initialSelection: selectedMedia,
+            onSelected: (newValue) {
+              widget.setMedia(newValue!);
             },
-            items: itemList.map((item) {
-              return DropdownMenuItem<Media>(
+            dropdownMenuEntries: itemList.map((item) {
+              return DropdownMenuEntry<Media>(
                 value: item,
-                child: Row(
-                  children: [
-                    Image.network(
-                      item.accessUrl,
-                      height: 100,
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Text(item.filename),
-                  ],
+                label: item.filename,
+                leadingIcon: Image.network(
+                  item.accessUrl,
+                  height: 50,
+                  width: 50,
                 ),
               );
             }).toList(),

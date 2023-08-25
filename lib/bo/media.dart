@@ -51,6 +51,7 @@ class Media implements BO {
       'mimeType': mimeType,
       'base64payload': base64payload,
       'mediaCategories': categories.toList(),
+      'accessUrl': accessUrl,
     });
   }
 

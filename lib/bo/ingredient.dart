@@ -66,9 +66,13 @@ class Ingredient implements BO {
   @override
   Widget tileTitle() {
     return Row(children: [
-      Image.network(image.accessUrl),
+      Image.network(
+        image.accessUrl,
+        height: 50,
+        width: 50,
+      ),
       const SizedBox(
-        height: 16,
+        width: 16,
       ),
       Text(name),
     ]);
