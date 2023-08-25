@@ -24,6 +24,7 @@ class _IngredientEditWidgetState extends State<IngredientEditWidget> {
   void initState() {
     super.initState();
 
+    _image = widget.object.image;
     _nameController = TextEditingController(text: widget.object.name);
   }
 
