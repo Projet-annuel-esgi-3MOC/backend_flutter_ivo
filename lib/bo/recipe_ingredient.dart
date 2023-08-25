@@ -18,8 +18,16 @@ class RecipeIngredient implements BO {
   @override
   String get id => _id ?? '';
 
+  @override
+  bool operator ==(other) {
+    if (identical(this, other)) return true;
+    return other is RecipeIngredient && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory RecipeIngredient.fromMap(Map<String, dynamic> json) {
-    print('hereee $json');
     return RecipeIngredient(json['_id'] ?? '',
         mesure: json['mesure'] ?? '',
         ingredient: Ingredient.fromMap(jsonDecode(json['ingredient'])));

@@ -35,15 +35,13 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
 
     setState(() {
       _ingredientDropdownOptions = ingredientDropdownOptions_;
-
-      _selectedRecipeIngredients = [];
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _selectedRecipeIngredients = [];
+    _selectedRecipeIngredients = widget.object.recipeIngredients;
     _ingredientDropdownOptions = [];
 
     _image = widget.object.image;
@@ -71,17 +69,10 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     _image = media;
   }
 
-  List<MultiSelectItem<RecipeIngredient>> _msiItems(
-      List<RecipeIngredient> ingredientDropdownOptions) {
-    return ingredientDropdownOptions
-        .map((recipeIngredient) => MultiSelectItem<RecipeIngredient>(
-            recipeIngredient,
-            '${recipeIngredient.mesure} of ${recipeIngredient.ingredient.name}'))
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
+    print('\nObj ${widget.object.toJson()} ${widget.object.recipeIngredients}');
+
     return CrudEdit<Recipe, RecipeProvider>(
       object: widget.object,
       fields: [
@@ -100,7 +91,15 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
         ),
         const SizedBox(height: 16.0),
         MultiSelectDialogField<RecipeIngredient>(
-          items: _msiItems(_ingredientDropdownOptions),
+          items: _ingredientDropdownOptions
+              .map(
+                (recipeIngredient) => MultiSelectItem<RecipeIngredient>(
+                  recipeIngredient,
+                  '${recipeIngredient.mesure} of ${recipeIngredient.ingredient.name}',
+                ),
+              )
+              .toList(),
+          initialValue: widget.object.recipeIngredients,
           title: const Text("Ingredients"),
           selectedColor: Colors.blue,
           decoration: BoxDecoration(
