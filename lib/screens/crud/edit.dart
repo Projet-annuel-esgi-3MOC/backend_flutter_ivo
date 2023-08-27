@@ -31,6 +31,8 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
   }
 
   Future<void> _submitForm(BuildContext context, T object) async {
+    final provider = Provider.of<P>(context, listen: false);
+
     if (_formKey.currentState == null) {
       showSnackbar(context, 'formKey is null');
       return;
@@ -41,9 +43,9 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
       await widget.onSave(object);
 
       if (object.id.isEmpty) {
-        await Provider.of<P>(context, listen: false).add(object);
+        await provider.add(object);
       } else {
-        await Provider.of<P>(context, listen: false).update(object);
+        await provider.update(object);
       }
     } else {
       showSnackbar(context, 'Invalid form');

@@ -38,13 +38,12 @@ class _MediaCategoryEditState extends State<MediaCategoryEdit> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
+              Navigator.pop(context);
+
               // Update the item with the new values
               widget.category.name = _nameController.text;
-
               await widget.onSubmitCallback();
               // Call your update method here
-
-              Navigator.pop(context);
             },
             child: const Text('Save Changes'),
           ),
