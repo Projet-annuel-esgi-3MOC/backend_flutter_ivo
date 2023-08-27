@@ -61,10 +61,7 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
   Future<void> _updateObjectFromForm(Firebaseable media) async {
     // Form is valid, process data
     //String? textValue = _nameController.text;
-    print('\nUpdate object ${media.toJson()}');
     if (_image != null) {
-      print(
-          '\nImage Path: ${_image!.mimeType} ${_image!.name} ${_image!.path} ${_image!.hashCode} ${_image!.runtimeType}');
       // Here you can upload the image to your desired location
       String pl = await fetchImageData(_image!.path);
 
@@ -72,7 +69,6 @@ class _MediaEditWidgetState extends State<MediaEditWidget> {
       media.mimeType = _image!.mimeType ?? 'application/octet-stream';
       media.base64payload = pl;
     }
-    print('\nUpdate object ${media.toJson()}');
   }
 
   Future<void> _pickImage() async {

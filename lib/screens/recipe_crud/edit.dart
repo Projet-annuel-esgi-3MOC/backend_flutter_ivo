@@ -22,6 +22,9 @@ class RecipeEditWidget extends StatefulWidget {
 class _RecipeEditWidgetState extends State<RecipeEditWidget> {
   late TextEditingController _nameController;
   late TextEditingController _difficultyController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _timeToCookController;
+  late TextEditingController _timeToPrepareController;
   late List<RecipeIngredient> _ingredientDropdownOptions;
   late List<RecipeIngredient> _selectedRecipeIngredients;
   late Media _image;
@@ -45,6 +48,12 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     _ingredientDropdownOptions = [];
 
     _image = widget.object.image;
+    _timeToCookController =
+        TextEditingController(text: widget.object.timeToCook);
+    _timeToPrepareController =
+        TextEditingController(text: widget.object.timeToPrepare);
+    _descriptionController =
+        TextEditingController(text: widget.object.description);
 
     _nameController = TextEditingController(text: widget.object.name);
     _difficultyController =
@@ -63,6 +72,9 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     recipeIngredient.difficulty = _difficultyController.text;
     recipeIngredient.recipeIngredients = _selectedRecipeIngredients;
     recipeIngredient.image = _image;
+    recipeIngredient.description = _descriptionController.text;
+    recipeIngredient.timeToCook = _timeToCookController.text;
+    recipeIngredient.timeToPrepare = _timeToPrepareController.text;
   }
 
   void setImage(Media media) {
@@ -71,8 +83,6 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('\nObj ${widget.object.toJson()} ${widget.object.recipeIngredients}');
-
     return CrudEdit<Recipe, RecipeProvider>(
       object: widget.object,
       fields: [
@@ -80,6 +90,63 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
           controller: _nameController,
           decoration: const InputDecoration(
             labelText: 'Name',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          controller: _descriptionController,
+          maxLines: null,
+          decoration: const InputDecoration(
+            labelText: 'Description',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          controller: _difficultyController,
+          decoration: const InputDecoration(
+            labelText: 'Difficulty',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          controller: _timeToCookController,
+          decoration: const InputDecoration(
+            labelText: 'Time to cook',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          controller: _timeToPrepareController,
+          decoration: const InputDecoration(
+            labelText: 'Time to prepare',
             border: OutlineInputBorder(),
           ),
           validator: (value) {

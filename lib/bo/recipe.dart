@@ -8,26 +8,32 @@ import 'package:flutter/material.dart';
 class Recipe implements BO {
   String? _id;
   String name;
+  String description;
   String difficulty;
   List<RecipeIngredient> recipeIngredients;
   Media image;
+  String timeToCook;
+  String timeToPrepare;
 
   Recipe(
     this._id, {
     required this.name,
+    required this.description,
     required this.difficulty,
     required this.recipeIngredients,
     required this.image,
+    required this.timeToCook,
+    required this.timeToPrepare,
   });
 
   @override
   String get id => _id ?? '';
 
   factory Recipe.fromMap(Map<String, dynamic> json) {
-    print('\nMap: $json');
     final recipe = Recipe(
       json['_id'] ?? '',
       name: json['name'] ?? '',
+      description: json['description'] ?? '',
       // recipeIngredients: [],
       recipeIngredients: (json['recipeIngredients'] as List<dynamic>)
           .map((e) => RecipeIngredient.fromMap(jsonDecode(e)))
@@ -36,6 +42,8 @@ class Recipe implements BO {
       image: Media.fromMap(
         jsonDecode(json['image']),
       ),
+      timeToCook: json['timeToCook'] ?? '',
+      timeToPrepare: json['timeToPrepare'] ?? '',
     );
 
     return recipe;
@@ -45,9 +53,12 @@ class Recipe implements BO {
     return Recipe(
       null,
       name: '',
+      description: '',
       difficulty: '',
       image: Media.placeholder(),
       recipeIngredients: [],
+      timeToCook: '',
+      timeToPrepare: '',
     );
   }
 
@@ -56,9 +67,12 @@ class Recipe implements BO {
     return jsonEncode({
       '_id': id,
       'name': name,
+      'description': description,
       'difficulty': difficulty,
       'recipeIngredients': recipeIngredients,
-      'image': image
+      'image': image,
+      'timeToCook': timeToCook,
+      'timeToPrepare': timeToPrepare,
     });
   }
 
@@ -66,9 +80,12 @@ class Recipe implements BO {
   String toCreateJson() {
     return jsonEncode({
       'name': name,
+      'description': description,
       'difficulty': difficulty,
       'recipeIngredients': recipeIngredients,
-      'image': image
+      'image': image,
+      'timeToCook': timeToCook,
+      'timeToPrepare': timeToPrepare,
     });
   }
 

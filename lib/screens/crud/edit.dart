@@ -32,18 +32,13 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
 
   Future<void> _submitForm(BuildContext context, T object) async {
     if (_formKey.currentState == null) {
-      print('\nNull key');
       showSnackbar(context, 'formKey is null');
       return;
     }
 
     if (_formKey.currentState!.validate()) {
-      print('\nValid form ${object.toJson()}');
-
       // Form is valid, process data
       await widget.onSave(object);
-
-      print('\nValid form ${object.toJson()}');
 
       if (object.id.isEmpty) {
         await Provider.of<P>(context, listen: false).add(object);
@@ -51,17 +46,14 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
         await Provider.of<P>(context, listen: false).update(object);
       }
     } else {
-      print('\nInvalid form');
-
       showSnackbar(context, 'Invalid form');
     }
-
-    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return SingleChildScrollView(
+      child: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -70,17 +62,15 @@ class _CrudEditState<T extends Firebaseable, P extends Iprovider>
               ...widget.fields,
               ElevatedButton(
                 onPressed: () async {
-                  // Update the item with the new values
-
+                  Navigator.of(context).pop();
                   await _submitForm(context, widget.object as T);
-                  // Call your update method here
-
-                  //Navigator.pop(context);
                 },
                 child: const Text('Save Changes'),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
