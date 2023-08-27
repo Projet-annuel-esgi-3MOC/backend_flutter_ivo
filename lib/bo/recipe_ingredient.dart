@@ -30,7 +30,7 @@ class RecipeIngredient implements BO {
   factory RecipeIngredient.fromMap(Map<String, dynamic> json) {
     return RecipeIngredient(json['_id'] ?? '',
         mesure: json['mesure'] ?? '',
-        ingredient: Ingredient.fromMap(jsonDecode(json['ingredient'])));
+        ingredient: Ingredient.fromMap(json['ingredient']));
   }
 
   factory RecipeIngredient.placeholder() {
