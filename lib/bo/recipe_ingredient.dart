@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/ingredient.dart';
 import 'package:flutter/material.dart';
@@ -40,20 +38,6 @@ class RecipeIngredient implements BO {
       mesure: '',
     );
   }
-
-  // @override
-  // String toJson() {
-  //   return jsonEncode({
-  //     '_id': id,
-  //     'mesure': mesure,
-  //     'ingredient': ingredient,
-  //   });
-  // }
-
-  // @override
-  // String toCreateJson() {
-  //   return jsonEncode({'mesure': mesure, 'ingredient': ingredient});
-  // }
 
   Map<String, dynamic> toJson() {
     return {

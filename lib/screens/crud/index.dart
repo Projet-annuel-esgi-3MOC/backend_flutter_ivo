@@ -103,7 +103,7 @@ class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
         } else {
           //final itemProvider = context.read<MediaCategoryProvider>();
           itemsProvider?.updateItems(snapshot.data!);
-          List<T> itemList = snapshot.data!;
+          List<T> itemList = snapshot.data ?? [];
 
           return ListView.builder(
             itemCount: itemList.length,

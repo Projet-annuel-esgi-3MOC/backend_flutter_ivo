@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:flutter/material.dart';
@@ -25,23 +23,6 @@ class Ingredient implements BO {
       image: Media.fromMap(json['image']),
     );
   }
-
-  // @override
-  // String toJson() {
-  //   return jsonEncode({
-  //     '_id': id,
-  //     'name': name,
-  //     'image': image,
-  //   });
-  // }
-
-  // @override
-  // String toCreateJson() {
-  //   return jsonEncode({
-  //     'name': name,
-  //     'image': image,
-  //   });
-  // }
 
   Map<String, dynamic> toJson() {
     return {

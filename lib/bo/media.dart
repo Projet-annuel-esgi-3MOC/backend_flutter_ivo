@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media_category.dart';
 import 'package:flutter/material.dart';
@@ -43,35 +41,13 @@ class Media implements BO {
     );
   }
 
-  // @override
-  // String toJson() {
-  //   return jsonEncode({
-  //     '_id': id,
-  //     'filename': filename,
-  //     'mimeType': mimeType,
-  //     'base64payload': base64payload,
-  //     'mediaCategories': categories.toList(),
-  //     'accessUrl': accessUrl,
-  //   });
-  // }
-
-  // @override
-  // String toCreateJson() {
-  //   return jsonEncode({
-  //     'filename': filename,
-  //     'mimeType': mimeType,
-  //     'base64payload': base64payload,
-  //     'mediaCategories': categories.toList(),
-  //   });
-  // }
-
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
       'filename': filename,
       'mimeType': mimeType,
       'base64payload': base64payload,
-      'mediaCategories': categories.toList(),
+      'mediaCategories': categories.map((e) => e.toJson()).toList(),
       'accessUrl': accessUrl,
     };
   }

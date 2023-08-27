@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:flutter/material.dart';
 
@@ -23,19 +21,11 @@ class MediaCategory implements BO {
     return MediaCategory('', '');
   }
 
-  @override
-  String toJson() {
-    return jsonEncode({
+  Map<String, dynamic> toJson() {
+    return {
       '_id': id,
       'name': name,
-    });
-  }
-
-  @override
-  String toCreateJson() {
-    return jsonEncode({
-      'name': name,
-    });
+    };
   }
 
   @override

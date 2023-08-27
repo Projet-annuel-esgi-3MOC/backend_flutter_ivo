@@ -9,14 +9,14 @@ class MediaCategoryAccess extends DAO<MediaCategory> {
   @override
   Future<bool> create(MediaCategory data) async {
     await fetch('localhost:3000', 'media-category',
-        method: HttpMethods.post, body: data.toJson());
+        method: HttpMethods.post, body: jsonEncode(data));
     return true;
   }
 
   @override
   Future<bool> delete(MediaCategory o) async {
     await fetch('localhost:3000', 'media-category/${o.id}',
-        method: HttpMethods.delete, body: o.toJson());
+        method: HttpMethods.delete, body: jsonEncode(o));
     return true;
   }
 
@@ -49,7 +49,7 @@ class MediaCategoryAccess extends DAO<MediaCategory> {
       'localhost:3000',
       'media-category/${o.id}',
       method: HttpMethods.patch,
-      body: o.toJson(),
+      body: jsonEncode(o),
     );
     return true;
   }

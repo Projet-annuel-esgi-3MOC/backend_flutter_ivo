@@ -1,3 +1,4 @@
+import 'package:backend_flutter_ivo/dal/providers/challenge_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
@@ -30,6 +31,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: ((context) => RecipeProvider()),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => ChallengeProvider()),
       ),
     ], child: const MyApp()),
   );

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
@@ -61,33 +59,6 @@ class Recipe implements BO {
       timeToPrepare: '',
     );
   }
-
-  // @override
-  // String toJson() {
-  //   return jsonEncode({
-  //     '_id': id,
-  //     'name': name,
-  //     'description': description,
-  //     'difficulty': difficulty,
-  //     'recipeIngredients': recipeIngredients,
-  //     'image': image,
-  //     'timeToCook': timeToCook,
-  //     'timeToPrepare': timeToPrepare,
-  //   });
-  // }
-
-  // @override
-  // String toCreateJson() {
-  //   return jsonEncode({
-  //     'name': name,
-  //     'description': description,
-  //     'difficulty': difficulty,
-  //     'recipeIngredients': recipeIngredients,
-  //     'image': image,
-  //     'timeToCook': timeToCook,
-  //     'timeToPrepare': timeToPrepare,
-  //   });
-  // }
 
   Map<String, dynamic> toJson() {
     return {
