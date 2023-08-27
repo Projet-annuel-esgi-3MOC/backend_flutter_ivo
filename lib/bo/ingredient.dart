@@ -26,21 +26,29 @@ class Ingredient implements BO {
     );
   }
 
-  @override
-  String toJson() {
-    return jsonEncode({
+  // @override
+  // String toJson() {
+  //   return jsonEncode({
+  //     '_id': id,
+  //     'name': name,
+  //     'image': image,
+  //   });
+  // }
+
+  // @override
+  // String toCreateJson() {
+  //   return jsonEncode({
+  //     'name': name,
+  //     'image': image,
+  //   });
+  // }
+
+  Map<String, dynamic> toJson() {
+    return {
       '_id': id,
       'name': name,
-      'image': image,
-    });
-  }
-
-  @override
-  String toCreateJson() {
-    return jsonEncode({
-      'name': name,
-      'image': image,
-    });
+      'image': image.toJson(),
+    };
   }
 
   @override

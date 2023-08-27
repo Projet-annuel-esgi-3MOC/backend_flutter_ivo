@@ -36,11 +36,11 @@ class Recipe implements BO {
       description: json['description'] ?? '',
       // recipeIngredients: [],
       recipeIngredients: (json['recipeIngredients'] as List<dynamic>)
-          .map((e) => RecipeIngredient.fromMap(jsonDecode(e)))
+          .map((e) => RecipeIngredient.fromMap(e))
           .toList(),
       difficulty: json['difficulty'] ?? '',
       image: Media.fromMap(
-        jsonDecode(json['image']),
+        json['image'],
       ),
       timeToCook: json['timeToCook'] ?? '',
       timeToPrepare: json['timeToPrepare'] ?? '',
@@ -62,31 +62,44 @@ class Recipe implements BO {
     );
   }
 
-  @override
-  String toJson() {
-    return jsonEncode({
+  // @override
+  // String toJson() {
+  //   return jsonEncode({
+  //     '_id': id,
+  //     'name': name,
+  //     'description': description,
+  //     'difficulty': difficulty,
+  //     'recipeIngredients': recipeIngredients,
+  //     'image': image,
+  //     'timeToCook': timeToCook,
+  //     'timeToPrepare': timeToPrepare,
+  //   });
+  // }
+
+  // @override
+  // String toCreateJson() {
+  //   return jsonEncode({
+  //     'name': name,
+  //     'description': description,
+  //     'difficulty': difficulty,
+  //     'recipeIngredients': recipeIngredients,
+  //     'image': image,
+  //     'timeToCook': timeToCook,
+  //     'timeToPrepare': timeToPrepare,
+  //   });
+  // }
+
+  Map<String, dynamic> toJson() {
+    return {
       '_id': id,
       'name': name,
       'description': description,
       'difficulty': difficulty,
-      'recipeIngredients': recipeIngredients,
-      'image': image,
+      'recipeIngredients': recipeIngredients.map((e) => e.toJson()).toList(),
+      'image': image.toJson(),
       'timeToCook': timeToCook,
       'timeToPrepare': timeToPrepare,
-    });
-  }
-
-  @override
-  String toCreateJson() {
-    return jsonEncode({
-      'name': name,
-      'description': description,
-      'difficulty': difficulty,
-      'recipeIngredients': recipeIngredients,
-      'image': image,
-      'timeToCook': timeToCook,
-      'timeToPrepare': timeToPrepare,
-    });
+    };
   }
 
   @override

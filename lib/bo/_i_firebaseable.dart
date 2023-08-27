@@ -7,6 +7,6 @@ abstract class Firebaseable {
   factory Firebaseable.fromMap(Map<String, dynamic> json) {
     throw UnimplementedError('Subclasses must implement fromMap method');
   }
-  String toJson();
-  String toCreateJson();
+  // String toJson();
+  // String toCreateJson();
 }

@@ -14,7 +14,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
   @override
   Future<bool> create(T data) async {
     await fetch('localhost:3000', collectionName,
-        method: HttpMethods.post, body: data.toCreateJson());
+        method: HttpMethods.post, body: jsonEncode(data));
     return true;
   }
 
@@ -54,7 +54,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
       'localhost:3000',
       '$collectionName/${o.id}',
       method: HttpMethods.patch,
-      body: o.toJson(),
+      body: jsonEncode(o),
     );
     return true;
   }

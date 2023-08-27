@@ -41,18 +41,26 @@ class RecipeIngredient implements BO {
     );
   }
 
-  @override
-  String toJson() {
-    return jsonEncode({
+  // @override
+  // String toJson() {
+  //   return jsonEncode({
+  //     '_id': id,
+  //     'mesure': mesure,
+  //     'ingredient': ingredient,
+  //   });
+  // }
+
+  // @override
+  // String toCreateJson() {
+  //   return jsonEncode({'mesure': mesure, 'ingredient': ingredient});
+  // }
+
+  Map<String, dynamic> toJson() {
+    return {
       '_id': id,
       'mesure': mesure,
       'ingredient': ingredient,
-    });
-  }
-
-  @override
-  String toCreateJson() {
-    return jsonEncode({'mesure': mesure, 'ingredient': ingredient});
+    };
   }
 
   @override

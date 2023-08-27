@@ -43,26 +43,37 @@ class Media implements BO {
     );
   }
 
-  @override
-  String toJson() {
-    return jsonEncode({
+  // @override
+  // String toJson() {
+  //   return jsonEncode({
+  //     '_id': id,
+  //     'filename': filename,
+  //     'mimeType': mimeType,
+  //     'base64payload': base64payload,
+  //     'mediaCategories': categories.toList(),
+  //     'accessUrl': accessUrl,
+  //   });
+  // }
+
+  // @override
+  // String toCreateJson() {
+  //   return jsonEncode({
+  //     'filename': filename,
+  //     'mimeType': mimeType,
+  //     'base64payload': base64payload,
+  //     'mediaCategories': categories.toList(),
+  //   });
+  // }
+
+  Map<String, dynamic> toJson() {
+    return {
       '_id': id,
       'filename': filename,
       'mimeType': mimeType,
       'base64payload': base64payload,
       'mediaCategories': categories.toList(),
       'accessUrl': accessUrl,
-    });
-  }
-
-  @override
-  String toCreateJson() {
-    return jsonEncode({
-      'filename': filename,
-      'mimeType': mimeType,
-      'base64payload': base64payload,
-      'mediaCategories': categories.toList(),
-    });
+    };
   }
 
   @override
