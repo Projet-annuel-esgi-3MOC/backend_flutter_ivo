@@ -1,11 +1,11 @@
+import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
-import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/_crud_provider.dart';
 import 'package:backend_flutter_ivo/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CrudEdit<T extends Firebaseable, P extends Iprovider>
-    extends StatefulWidget {
+class CrudEdit<T extends BO, P extends CrudProvider<T>> extends StatefulWidget {
   final List<Widget> fields;
   final Future<void> Function(T) onSave;
   final T object;
@@ -21,7 +21,7 @@ class CrudEdit<T extends Firebaseable, P extends Iprovider>
   State<CrudEdit> createState() => _CrudEditState<T, P>();
 }
 
-class _CrudEditState<T extends Firebaseable, P extends Iprovider>
+class _CrudEditState<T extends BO, P extends CrudProvider<T>>
     extends State<CrudEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 

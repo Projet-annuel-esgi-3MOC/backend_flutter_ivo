@@ -1,10 +1,10 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/_crud_provider.dart';
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
+class Crud<T extends BO, U extends CrudProvider<T>> extends StatefulWidget {
   final BO Function() newInstanceBuilder;
   final Widget Function(T) editWidget;
   final Function(FABAction) setFAB;
@@ -20,7 +20,7 @@ class Crud<T extends BO, U extends Iprovider<T>> extends StatefulWidget {
   State<Crud> createState() => _CrudState<T, U>();
 }
 
-class _CrudState<T extends BO, U extends Iprovider<T>> extends State<Crud> {
+class _CrudState<T extends BO, U extends CrudProvider<T>> extends State<Crud> {
   Function onCrudSave = () => {throw UnimplementedError('Set a save callback')};
 
   setOnCrudSaveCallback(Function fun) {

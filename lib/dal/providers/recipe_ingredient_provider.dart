@@ -1,70 +1,16 @@
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
 import 'package:backend_flutter_ivo/dal/generic_dao.dart';
-import 'package:backend_flutter_ivo/dal/providers/_i_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:backend_flutter_ivo/dal/providers/_crud_provider.dart';
 
-final accesser = Access<RecipeIngredient>(
-  collectionName: 'recipe-ingredient',
-  instanceCreator: (s) => RecipeIngredient.fromMap(s),
-  // I didnt find how to have an instance created without reflection
-  // (dart:mirror) which seems to be unadvised to be used on flutter
-  // because of poor performance, so I embed the creator as a callback
-);
-
-class RecipeIngredientProvider extends ChangeNotifier
-    implements Iprovider<RecipeIngredient> {
-  final Access<RecipeIngredient> accesser_ = accesser;
-
-  List<RecipeIngredient>? _items;
-
-  List<RecipeIngredient> get items => _items ?? [];
-
-  // Method to populate items initially
-  @override
-  Future<void> fetch() async {
-    _items = await accesser_.getAll();
-    notifyListeners();
-  }
-
-  @override
-  Future<List<RecipeIngredient>> getAll() async {
-    if (_items == null) await fetch();
-    return _items!;
-  }
-
-  @override
-  Future<void> update(RecipeIngredient updatedItem) async {
-    // Update the item in your data source
-    await accesser_.update(updatedItem);
-
-    // Update the local list with the updated item
-    _items = await accesser_.getAll();
-
-    notifyListeners();
-  }
-
-  @override
-  Future<void> add(RecipeIngredient addedItem) async {
-    await accesser_.create(addedItem);
-
-    _items = await accesser_.getAll();
-
-    notifyListeners();
-  }
-
-  @override
-  Future<void> remove(RecipeIngredient addedItem) async {
-    await accesser_.delete(addedItem);
-
-    _items = await accesser_.getAll();
-
-    notifyListeners();
-  }
-
-  @override
-  void updateItems(List<RecipeIngredient> items) {
-    _items = items;
-
-    //notifyListeners();  // ! this triggers setstate on build
-  }
+class RecipeIngredientProvider extends CrudProvider<RecipeIngredient> {
+  RecipeIngredientProvider()
+      : super(
+          accesser_: Access<RecipeIngredient>(
+            collectionName: 'recipe-ingredient',
+            instanceCreator: (s) => RecipeIngredient.fromMap(s),
+            // I didnt find how to have an instance created without reflection
+            // (dart:mirror) which seems to be unadvised to be used on flutter
+            // because of poor performance, so I embed the creator as a callback
+          ),
+        );
 }
