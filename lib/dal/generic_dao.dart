@@ -2,8 +2,15 @@ import 'dart:convert';
 
 import 'package:backend_flutter_ivo/bo/_enum_http_methods.dart';
 import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
-import 'package:backend_flutter_ivo/dal/_abst_dao.dart';
 import 'package:backend_flutter_ivo/dal/http.dart';
+
+abstract class DAO<T> {
+  Future<bool> create(T data);
+  Future<T> get(String id);
+  Future<List<T>> getAll();
+  Future<bool> update(T o);
+  Future<bool> delete(T o);
+}
 
 class Access<T extends Firebaseable> extends DAO<T> {
   final T Function(Map<String, dynamic>) instanceCreator;

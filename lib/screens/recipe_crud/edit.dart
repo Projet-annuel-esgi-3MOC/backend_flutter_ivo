@@ -2,10 +2,13 @@ import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/bo/recipe.dart';
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
+import 'package:backend_flutter_ivo/bo/recipe_step.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/recipe_step_provider.dart';
 import 'package:backend_flutter_ivo/screens/crud/edit.dart';
 import 'package:backend_flutter_ivo/widgets/media_dropdown.dart';
+import 'package:backend_flutter_ivo/widgets/multiselect_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +30,7 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
   late TextEditingController _timeToPrepareController;
   late List<RecipeIngredient> _ingredientDropdownOptions;
   late List<RecipeIngredient> _selectedRecipeIngredients;
+  late List<RecipeStep> _selectedRecipeSteps;
   late Media _image;
 
   Future<void> populateIngredientList() async {
@@ -41,11 +45,18 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     });
   }
 
+  void setRecipeSteps(List<RecipeStep> steps) {
+    print('onSave $steps');
+    _selectedRecipeSteps = steps;
+  }
+
   @override
   void initState() {
     super.initState();
     _selectedRecipeIngredients = widget.object.recipeIngredients;
     _ingredientDropdownOptions = [];
+
+    _selectedRecipeSteps = widget.object.recipeSteps;
 
     _image = widget.object.image;
     _timeToCookController =
@@ -66,15 +77,19 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
     populateIngredientList(); // Move the async operation here
   }
 
-  Future<void> _updateObjectFromForm(Firebaseable recipeIngredient) async {
+  Future<void> _updateObjectFromForm(Firebaseable recipe) async {
     // Form is valid, process data
-    (recipeIngredient as Recipe).name = _nameController.text;
-    recipeIngredient.difficulty = _difficultyController.text;
-    recipeIngredient.recipeIngredients = _selectedRecipeIngredients;
-    recipeIngredient.image = _image;
-    recipeIngredient.description = _descriptionController.text;
-    recipeIngredient.timeToCook = _timeToCookController.text;
-    recipeIngredient.timeToPrepare = _timeToPrepareController.text;
+    (recipe as Recipe).name = _nameController.text;
+    print('\nFOOO ${recipe.toJson()}');
+
+    recipe.difficulty = _difficultyController.text;
+    recipe.recipeIngredients = _selectedRecipeIngredients;
+    recipe.recipeSteps = _selectedRecipeSteps;
+    recipe.image = _image;
+    recipe.description = _descriptionController.text;
+    recipe.timeToCook = _timeToCookController.text;
+    recipe.timeToPrepare = _timeToPrepareController.text;
+    print('\nFOOOoo ${recipe.toJson()}');
   }
 
   void setImage(Media media) {
@@ -192,6 +207,11 @@ class _RecipeEditWidgetState extends State<RecipeEditWidget> {
             _selectedRecipeIngredients = results;
           },
           //onSelectionChanged: (p0) => 0,
+        ),
+        const SizedBox(height: 16.0),
+        MultiselectRecipeStep<RecipeStep, RecipeStepProvider>(
+          elements: _selectedRecipeSteps,
+          onSave: setRecipeSteps,
         ),
         const SizedBox(height: 16.0),
         MediaDropDown(

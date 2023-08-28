@@ -1,5 +1,4 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
-import 'package:backend_flutter_ivo/bo/_i_firebaseable.dart';
 import 'package:backend_flutter_ivo/dal/providers/_crud_provider.dart';
 import 'package:backend_flutter_ivo/widgets/snackbar.dart';
 import 'package:flutter/material.dart';

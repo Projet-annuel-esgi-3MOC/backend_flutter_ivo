@@ -17,12 +17,20 @@ class RecipeStep implements BO {
   @override
   String get id => _id ?? '';
 
+  @override
+  bool operator ==(other) {
+    if (identical(this, other)) return true;
+    return other is RecipeStep && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory RecipeStep.fromMap(Map<String, dynamic> json) {
     final recipe = RecipeStep(
       json['_id'] ?? '',
       order: json['order'] ?? -1,
       content: json['content'] ?? '',
-      // recipeIngredients: [],
       duration: json['duration'] ?? -1,
     );
 
@@ -49,7 +57,7 @@ class RecipeStep implements BO {
 
   @override
   String showSubtitle() {
-    return duration == -1 ? 'Durée non spécifié' : '${duration / 60} minutes';
+    return duration == -1 ? 'Durée non spécifié' : '$duration minutes';
   }
 
   @override

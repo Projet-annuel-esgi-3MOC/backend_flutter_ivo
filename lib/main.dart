@@ -4,6 +4,7 @@ import 'package:backend_flutter_ivo/dal/providers/media_category_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/media_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_ingredient_provider.dart';
 import 'package:backend_flutter_ivo/dal/providers/recipe_provider.dart';
+import 'package:backend_flutter_ivo/dal/providers/recipe_step_provider.dart';
 import 'package:backend_flutter_ivo/screens/_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: ((context) => ChallengeProvider()),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => RecipeStepProvider()),
       ),
     ], child: const MyApp()),
   );

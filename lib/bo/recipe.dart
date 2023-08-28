@@ -1,6 +1,7 @@
 import 'package:backend_flutter_ivo/bo/_i_bo.dart';
 import 'package:backend_flutter_ivo/bo/media.dart';
 import 'package:backend_flutter_ivo/bo/recipe_ingredient.dart';
+import 'package:backend_flutter_ivo/bo/recipe_step.dart';
 import 'package:flutter/material.dart';
 
 class Recipe implements BO {
@@ -9,6 +10,7 @@ class Recipe implements BO {
   String description;
   String difficulty;
   List<RecipeIngredient> recipeIngredients;
+  List<RecipeStep> recipeSteps;
   Media image;
   String timeToCook;
   String timeToPrepare;
@@ -19,6 +21,7 @@ class Recipe implements BO {
     required this.description,
     required this.difficulty,
     required this.recipeIngredients,
+    required this.recipeSteps,
     required this.image,
     required this.timeToCook,
     required this.timeToPrepare,
@@ -33,8 +36,11 @@ class Recipe implements BO {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       // recipeIngredients: [],
-      recipeIngredients: (json['recipeIngredients'] as List<dynamic>)
+      recipeIngredients: ((json['recipeIngredients'] ?? []) as List<dynamic>)
           .map((e) => RecipeIngredient.fromMap(e))
+          .toList(),
+      recipeSteps: ((json['recipeSteps'] ?? []) as List<dynamic>)
+          .map((e) => RecipeStep.fromMap(e))
           .toList(),
       difficulty: json['difficulty'] ?? '',
       image: Media.fromMap(
@@ -55,6 +61,7 @@ class Recipe implements BO {
       difficulty: '',
       image: Media.placeholder(),
       recipeIngredients: [],
+      recipeSteps: [],
       timeToCook: '',
       timeToPrepare: '',
     );
@@ -67,6 +74,7 @@ class Recipe implements BO {
       'description': description,
       'difficulty': difficulty,
       'recipeIngredients': recipeIngredients.map((e) => e.toJson()).toList(),
+      'recipeSteps': recipeSteps.map((e) => e.toJson()).toList(),
       'image': image.toJson(),
       'timeToCook': timeToCook,
       'timeToPrepare': timeToPrepare,

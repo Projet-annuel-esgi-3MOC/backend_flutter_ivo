@@ -1,5 +1,6 @@
 import 'package:backend_flutter_ivo/screens/_fab_action.dart';
 import 'package:backend_flutter_ivo/screens/challenge_crud/index.dart';
+import 'package:backend_flutter_ivo/screens/crud_recipe_step.dart';
 import 'package:backend_flutter_ivo/screens/ingredient_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_category_crud/index.dart';
 import 'package:backend_flutter_ivo/screens/media_crud/index.dart';
@@ -41,6 +42,7 @@ class _CrudSelecterState extends State<CrudSelecter> {
         RecipeIngredientCrud(setFAB: changeFabAction),
         RecipeCrud(setFAB: changeFabAction),
         ChallengeCrud(setFAB: changeFabAction),
+        RecipeStepCrud(setFAB: changeFabAction),
       ],
     );
     _selectedCrud = widget.cruds.first;
