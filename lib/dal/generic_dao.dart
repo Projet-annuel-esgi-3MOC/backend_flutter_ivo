@@ -20,14 +20,14 @@ class Access<T extends Firebaseable> extends DAO<T> {
 
   @override
   Future<bool> create(T data) async {
-    await fetch('localhost:3000', collectionName,
+    await fetch('localhost:3000', 'crud/$collectionName',
         method: HttpMethods.post, body: jsonEncode(data));
     return true;
   }
 
   @override
   Future<bool> delete(T o) async {
-    await fetch('localhost:3000', '$collectionName/${o.id}',
+    await fetch('localhost:3000', 'crud/$collectionName/${o.id}',
         method: HttpMethods.delete);
     return true;
   }
@@ -36,7 +36,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
   Future<T> get(String id) async {
     var res = await fetch(
       'localhost:3000',
-      '$collectionName/$id',
+      'crud/$collectionName/$id',
       method: HttpMethods.get,
     );
 
@@ -47,7 +47,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
   Future<List<T>> getAll() async {
     var res = await fetch(
       'localhost:3000',
-      collectionName,
+      'crud/$collectionName',
       method: HttpMethods.get,
     );
     final List<dynamic> dataList = jsonDecode(res);
@@ -59,7 +59,7 @@ class Access<T extends Firebaseable> extends DAO<T> {
   Future<bool> update(T o) async {
     await fetch(
       'localhost:3000',
-      '$collectionName/${o.id}',
+      'crud/$collectionName/${o.id}',
       method: HttpMethods.patch,
       body: jsonEncode(o),
     );
